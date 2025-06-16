@@ -9,3 +9,4 @@ scikit-learn
 jinja2
 python-multipart
 python-dotenv
+huggingface_hub
