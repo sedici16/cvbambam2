@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Cv Bam Bam is a smart, semantic CV parser designed for small businesses. Instantly extract structured data from resumes and find the best candidates using AI.">
+    <meta name="keywords" content="CV parser, ATS optimizer, resume analysis, semantic search, candidate matching, AI hiring tool, small business recruitment">
+    <meta name="author" content="Gabriele Monti">
+    <meta property="og:title" content="Cv Bam Bam | Semantic CV Parser for Small Businesses">
+    <meta property="og:description" content="Smart, corporate-grade CV parsing for small teams. Export candidate data to CSV and match talent using AI.">
+    <meta property="og:image" content="/static/image.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cv Bam Bam | Smart CV Parser">
+    <meta name="twitter:description" content="Semantic CV parsing with AI for small business hiring.">
+    <meta name="twitter:image" content="/static/image.jpg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cv Bam Bam | Semantic CV Parser for Small Businesses</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .language-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+        .language-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #3b82f6;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "EN";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        input:checked + .slider {
+            background-color: #10b981;
+        }
+        input:checked + .slider:before {
+            content: "IT";
+            transform: translateX(30px);
+            color: #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Language Switch -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-2">
+        <label class="language-switch">
+            <input type="checkbox" id="languageToggle">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="container mx-auto px-4 py-16 md:py-24">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4" data-en="Cv Bam Bam" data-it="Cv Bam Bam">Cv Bam Bam</h1>
+                <h2 class="text-2xl md:text-3xl font-semibold text-blue-600 mb-6" data-en="Semantic CV Parser for Small Businesses" data-it="Parser CV Semantico per Piccole Aziende">Semantic CV Parser for Small Businesses</h2>
+                <p class="text-gray-600 mb-8 text-lg" data-en="Cv Bam Bam uses advanced semantic similarity to help small companies find the best candidates—fast. Parse resumes like a corporate ATS, extract data into CSV format, and simplify your hiring process in seconds. No signup. No friction." data-it="Cv Bam Bam utilizza la similarità semantica per aiutare le piccole aziende a trovare rapidamente i candidati migliori. Analizza i CV come un ATS aziendale, esporta i dati in formato CSV e semplifica la selezione in pochi secondi. Nessuna registrazione, nessun ostacolo.">
+                    Cv Bam Bam uses advanced semantic similarity to help small companies find the best candidates—fast. Parse resumes like a corporate ATS, extract data into CSV format, and simplify your hiring process in seconds. No signup. No friction.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="/gradio" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-bolt mr-2"></i> <span data-en="Try Now – Just One Click!" data-it="Prova Ora – Un Solo Click!">Try Now – Just One Click!</span>
+                    </a>
+                    <a href="https://wa.me/447981395253" target="_blank" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-envelope mr-2"></i> <span data-en="Contact Us" data-it="Contattaci">Contact Us</span>
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 relative">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?auto=format&fit=crop&w=1470&q=80" alt="CV Analysis" class="rounded-xl shadow-2xl w-full h-auto">
+                    <div class="mt-8">
+        <img src="static/image.jpg" alt="DeepSeek Inside" class="w-32 md:w-40" title="DeepSeek Inside">
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-2xl font-bold">Cv Bam Bam</h2>
+                    <p class="text-gray-400 mt-2" data-en="Corporate-grade semantic CV parsing for small teams. Export to CSV. Hire smarter." data-it="Parsing semantico di livello aziendale per piccoli team. Esporta in CSV. Assumi meglio.">
+                        Corporate-grade semantic CV parsing for small teams. Export to CSV. Hire smarter.
+                    </p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="https://www.linkedin.com/in/gabrielemonti/" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 pt-6 text-center text-gray-400">
+                <p data-en="© 2023 Cv Bam Bam. All rights reserved." data-it="© 2023 Cv Bam Bam. Tutti i diritti riservati.">
+                    © 2023 Cv Bam Bam. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language toggle functionality
+        const languageToggle = document.getElementById('languageToggle');
+        const elementsToTranslate = document.querySelectorAll('[data-en], [data-it]');
+
+        languageToggle.addEventListener('change', function () {
+            const isItalian = this.checked;
+            elementsToTranslate.forEach(element => {
+                if (isItalian && element.hasAttribute('data-it')) {
+                    element.textContent = element.getAttribute('data-it');
+                } else if (!isItalian && element.hasAttribute('data-en')) {
+                    element.textContent = element.getAttribute('data-en');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

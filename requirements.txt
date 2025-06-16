@@ -1,0 +1,11 @@
+fastapi
+gradio
+uvicorn[standard]
+pandas
+python-docx
+pymupdf
+sentence-transformers
+scikit-learn
+jinja2
+python-multipart
+python-dotenv
