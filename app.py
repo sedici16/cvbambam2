@@ -7,8 +7,6 @@ import tempfile
 import re
 import json
 import os
-from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
@@ -18,26 +16,20 @@ import threading
 from fastapi.responses import FileResponse
 from gradio.routes import mount_gradio_app
 from fastapi.responses import RedirectResponse
-
+import requests
 from fastapi.staticfiles import StaticFiles
 
-
-model = SentenceTransformer("paraphrase-MiniLM-L3-v2")  # ✅ Small and fastall-MiniLM-L6-v2
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
-def compute_similarity(ideal_profile, cv_texts):
-    # Embed the ideal profile
-    profile_vec = model.encode(ideal_profile)
-
-    # Embed all CVs (list of strings)
-    cv_vectors = model.encode(cv_texts)
-
-    # Compute cosine similarity
-    similarities = cosine_similarity([profile_vec], cv_vectors)[0]
-
-    return similarities
+def compute_similarity_remote(ideal_profile, text_blocks):
+    response = requests.post(
+        "https://theoracle-sim-fun.hf.space/similarity",
+        json={"ideal_profile": ideal_profile, "text_blocks": text_blocks},
+        timeout=30
+    )
+    return response.json()
 
 
 MAX_DOCS = 5  # ❗ change this to limit uploads
@@ -142,7 +134,8 @@ def process_files(files, ideal_profile):
     preview_df["text_for_match"] = preview_df.apply(row_to_text, axis=1)
 
     
-    similarities = compute_similarity(ideal_profile, preview_df["text_for_match"].tolist())
+    similarities = compute_similarity_remote(ideal_profile, preview_df["text_for_match"].tolist())
+
 
 
     preview_df["similarity"] = similarities
