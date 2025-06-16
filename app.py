@@ -22,7 +22,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 
-model = SentenceTransformer("all-MiniLM-L6-v2")  # ✅ Small and fast
+model = SentenceTransformer("paraphrase-MiniLM-L3-v2")  # ✅ Small and fastall-MiniLM-L6-v2
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
