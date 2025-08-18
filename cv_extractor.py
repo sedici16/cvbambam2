@@ -2,7 +2,7 @@
 
 from huggingface_hub import InferenceClient
 
-HF_TOKEN = "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"
+HF_TOKEN = os.getenv("HF_TOKEN")
 
 client = InferenceClient(
     provider="novita",
