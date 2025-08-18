@@ -1,7 +1,10 @@
 # cv_extractor.py
 
 from huggingface_hub import InferenceClient
+from dotenv import load_dotenv
+import os
 
+load_dotenv()  # take variables from .env
 HF_TOKEN = os.getenv("HF_TOKEN")
 
 client = InferenceClient(
