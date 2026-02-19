@@ -68,6 +68,7 @@
     </style>
 </head>
 <body class="bg-gray-50 font-sans">
+
     <!-- Language Switch -->
     <div class="fixed top-4 right-4 z-50 flex items-center gap-2">
         <label class="language-switch">
@@ -83,7 +84,9 @@
                 <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4" data-en="Cv Bam Bam" data-it="Cv Bam Bam">Cv Bam Bam</h1>
                 <h2 class="text-2xl md:text-3xl font-semibold text-blue-600 mb-6" data-en="Semantic CV Parser for Small Businesses" data-it="Parser CV Semantico per Piccole Aziende">Semantic CV Parser for Small Businesses</h2>
                 <p class="text-gray-600 mb-8 text-lg" data-en="Cv Bam Bam uses advanced semantic similarity to help small companies find the best candidates—fast. Parse resumes like a corporate ATS, extract data into CSV format, and simplify your hiring process in seconds. No signup. No friction." data-it="Cv Bam Bam utilizza la similarità semantica per aiutare le piccole aziende a trovare rapidamente i candidati migliori. Analizza i CV come un ATS aziendale, esporta i dati in formato CSV e semplifica la selezione in pochi secondi. Nessuna registrazione, nessun ostacolo.">
-                    Cv Bam Bam uses advanced semantic similarity to help small companies find the best candidates—fast. Parse resumes like a corporate ATS, extract data into CSV format, and simplify your hiring process in seconds. No signup. No friction.
+                    Cv Bam Bam uses advanced semantic similarity to help small companies find the best candidates—fast. Parse resumes like a corporate 
+                    <a href="/what-is-an-ats.html" class="text-blue-600 hover:underline font-medium">ATS system</a>, 
+                    extract data into CSV format, and simplify your hiring process in seconds. No signup. No friction.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
                     <a href="/gradio" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105 shadow-lg">
@@ -94,16 +97,47 @@
                     </a>
                 </div>
             </div>
+
             <div class="md:w-1/2 relative">
                 <div class="relative">
                     <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?auto=format&fit=crop&w=1470&q=80" alt="CV Analysis" class="rounded-xl shadow-2xl w-full h-auto">
                     <div class="mt-8">
-        <img src="static/image.jpg" alt="DeepSeek Inside" class="w-32 md:w-40" title="DeepSeek Inside">
+                        <img src="static/image.jpg" alt="DeepSeek Inside" class="w-32 md:w-40" title="DeepSeek Inside">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-</div>
-</div>
-</div>
+
+    <!-- Learn More Section (Cluster Links) -->
+    <div class="bg-white py-16">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                Learn More About CV Parsing
+            </h2>
+            <p class="text-gray-600 mb-6">
+                Want to understand how semantic CV parsing works and how it compares to traditional resume screening tools? Explore our in-depth guides below.
+            </p>
+
+            <ul class="space-y-3 text-blue-600 font-medium">
+                <li>
+                    <a href="/what-is-a-cv-parser.html" class="hover:underline">
+                        What is a CV Parser? (Beginner Guide)
+                    </a>
+                </li>
+                <li>
+                    <a href="/ats-vs-manual-screening.html" class="hover:underline">
+                        ATS vs Manual Resume Screening
+                    </a>
+                </li>
+                <li>
+                    <a href="/best-cv-parsers-small-business.html" class="hover:underline">
+                        Best CV Parsers for Small Businesses
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8">
@@ -130,7 +164,6 @@
     </footer>
 
     <script>
-        // Language toggle functionality
         const languageToggle = document.getElementById('languageToggle');
         const elementsToTranslate = document.querySelectorAll('[data-en], [data-it]');
 
