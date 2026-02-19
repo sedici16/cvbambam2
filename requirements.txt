@@ -10,3 +10,5 @@ jinja2
 python-multipart
 python-dotenv
 huggingface_hub
+requests==2.32.3
+
