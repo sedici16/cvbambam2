@@ -48,7 +48,7 @@ def flatten_lists_in_df(df):
         # Customize this format string if needed
         return ", ".join(f"{k.capitalize()}: {v}" for k, v in d.items())
 
-    return df.applymap(flatten_cell)
+    return df.map(flatten_cell)  # ← CAMBIA QUI
 
 
 
