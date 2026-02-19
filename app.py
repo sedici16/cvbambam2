@@ -7,21 +7,20 @@ import tempfile
 import re
 import json
 import os
-import pandas as pd
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
-import gradio as gr
-app = FastAPI()
+
 import threading
 from fastapi.responses import FileResponse
 from gradio.routes import mount_gradio_app
 from fastapi.responses import RedirectResponse
 import requests
 from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI, HTTPException
 
+app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mount("/", StaticFiles(directory="templates", html=True), name="static")
 
 
 
@@ -205,9 +204,16 @@ with gr.Blocks(title="Custom CV Extractor") as demo:
 
 
 
-#@app.get("/", include_in_schema=False)
-#def root():
-#    return FileResponse("templates/index.html")
+@app.get("/", include_in_schema=False)
+def root():
+    return FileResponse("templates/index.html")
+
+@app.get("/{filename}.html", include_in_schema=False)
+def serve_html(filename: str):
+    file_path = f"templates/{filename}.html"
+    if os.path.exists(file_path):
+        return FileResponse(file_path)
+    raise HTTPException(status_code=404)
 
 
 
