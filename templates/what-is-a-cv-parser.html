@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn what a CV parser is, how it extracts data from resumes using AI and NLP, and why small businesses need one to hire smarter and faster.">
+    <title>What Is a CV Parser and How Does It Work? | Cv Bam Bam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <nav class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold text-blue-600">Cv Bam Bam</a>
+            <a href="/gradio" class="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-blue-700 transition">Try Free</a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-12 max-w-4xl">
+        <article>
+            <h1 class="text-4xl font-bold text-gray-900 mb-6">What Is a CV Parser and How Does It Work?</h1>
+            <p class="text-gray-500 text-sm mb-10">Reading time: 6 minutes &nbsp;|&nbsp; Topic: CV Parsing Basics</p>
+
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">Every time you post a job, a flood of CVs arrives in your inbox. Reading each one manually — even quickly — eats hours you don't have. A CV parser solves that problem by automatically extracting the key information from every resume and turning it into structured, comparable data. No more toggling between PDFs, no more spreadsheet rows filled in by hand.</p>
+
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">But what exactly is a CV parser, and how does the technology work? This guide explains the whole process in plain English — no technical background required.</p>
+
+            <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">The Short Answer: What a CV Parser Does</h2>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">A CV parser (also called a resume parser) is software that reads a resume document — PDF, Word, plain text — and automatically identifies and extracts key information: the candidate's name, contact details, work history, education, skills, and more. The output is structured data you can actually use: sort, filter, score, and export.</p>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">Think of it as the difference between a pile of letters and a filled-in spreadsheet. The letters contain the same information, but the spreadsheet lets you act on it immediately.</p>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">To understand <a href="/resume-data-extraction.html" class="text-blue-600 hover:underline font-medium">how resume data extraction works</a> in more depth, it helps to look at the parsing process step by step.</p>
+
+            <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">How CV Parsing Actually Works</h2>
+
+            <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-3">Step 1 — Reading the Document</h3>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">The parser starts by extracting raw text from the document. PDF and Word files store content in different internal formats, so the parser uses dedicated libraries to pull out every character, word, and line — preserving the reading order as best it can. This is harder than it sounds: some PDFs are actually scanned images, requiring OCR (optical character recognition) to read at all.</p>
+
+            <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-3">Step 2 — Natural Language Processing (NLP)</h3>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">Once the raw text is extracted, NLP algorithms go to work. Named Entity Recognition (NER) identifies entities like person names, company names, dates, locations, and email addresses. Section detection identifies the logical blocks of the resume: "Experience," "Education," "Skills," "Certifications." This step is where most of the heavy lifting happens.</p>
+
+            <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-3">Step 3 — Semantic Analysis</h3>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">Modern parsers go beyond simple NER. Semantic analysis understands <em>meaning</em>, not just words. This means recognising that "project lead," "team lead," and "project manager" all describe similar roles — and matching a candidate's experience to a job description even when the exact wording doesn't align. This is the technology that separates good parsers from great ones.</p>
+
+            <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-3">Step 4 — Structured Output</h3>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">Finally, the extracted information is organised into clean, standardised fields: name, email, phone, job titles with dates, education degrees, skill keywords, and a semantic match score relative to the job description you've provided. This structured output is what you export to CSV and use to make decisions.</p>
+
+            <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">Keyword Matching vs. Semantic Parsing — What's the Difference?</h2>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">Traditional applicant tracking systems rely on keyword matching. They scan for specific words — "Python," "5 years," "team management" — and reject any CV that doesn't contain them verbatim. The result? Research suggests that up to 75% of qualified candidates are filtered out because they described their experience differently than the keyword list expected.</p>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">Semantic parsing solves this. Instead of looking for exact words, it understands meaning. A candidate who writes "led cross-functional teams to deliver software products" is recognised as equivalent to someone who writes "engineering manager overseeing product delivery." The parser understands the relationship between concepts, not just the letters on the page.</p>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">If you're evaluating tools, this distinction matters enormously. You can compare approaches in more detail in our guide on <a href="/ats-vs-manual-screening.html" class="text-blue-600 hover:underline font-medium">CV parsing versus manual screening</a>.</p>
+
+            <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">Why Small Businesses Need CV Parsing</h2>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">Large companies have dedicated HR teams to manage hiring. Small businesses don't. The owner, office manager, or a team lead reads every CV — usually while also doing their actual job. When thirty applications arrive for a single role, that's easily three to five hours of reading. For a hiring process that happens several times a year, the cost adds up fast.</p>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">Beyond time, there's the consistency problem. Human reviewers make different decisions when tired or distracted. Criteria drift. The tenth CV gets judged differently from the first. A parser applies the same logic to every document, every time.</p>
+            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2 text-lg">
+                <li>No dedicated HR staff to absorb screening workload</li>
+                <li>Every hire carries more weight — a bad hire in a 5-person team is a crisis</li>
+                <li>Time spent on screening is time away from the business</li>
+                <li>Inconsistent decisions without a structured process</li>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">What Can You Do With Parsed CV Data?</h2>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">Once your CVs are parsed, you have structured data you can actually work with:</p>
+            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2 text-lg">
+                <li><strong>Shortlist objectively</strong> — rank candidates by semantic match score against your job description</li>
+                <li><strong>Filter instantly</strong> — find everyone with 3+ years of experience in one click</li>
+                <li><strong>Export to CSV</strong> — take the data to Google Sheets or Excel for team review</li>
+                <li><strong>Compare side-by-side</strong> — all candidates in one spreadsheet, one row each</li>
+                <li><strong>Build a talent pool</strong> — keep parsed data from past roles to re-engage strong candidates</li>
+            </ul>
+            <p class="text-gray-700 mb-4 leading-relaxed text-lg">When you're ready to choose a tool, our guide to <a href="/how-to-choose-cv-parser.html" class="text-blue-600 hover:underline font-medium">how to choose the right CV parser</a> covers the criteria that actually matter for small teams.</p>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-8 mt-12 text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-3">Try Cv Bam Bam — Semantic CV Parsing, Free</h2>
+                <p class="text-gray-600 mb-6 text-lg">Upload your CVs, enter your job description, and get ranked candidates with structured data ready to export. No signup. No friction. Results in seconds.</p>
+                <a href="/gradio" class="inline-block bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition mt-2 mr-3">Parse CVs Now</a>
+                <a href="/get-started-cv-bam-bam.html" class="text-blue-600 hover:underline font-medium">Get started with Cv Bam Bam</a>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-800 mt-12 mb-4">Related Reading</h2>
+            <ul class="space-y-2 text-lg">
+                <li><a href="/best-cv-parsers-small-business.html" class="text-blue-600 hover:underline font-medium">Best CV parsers for small businesses — what to look for</a></li>
+                <li><a href="/ats-vs-manual-screening.html" class="text-blue-600 hover:underline font-medium">ATS vs manual screening: which works better for small teams?</a></li>
+                <li><a href="/resume-data-extraction.html" class="text-blue-600 hover:underline font-medium">Resume data extraction explained</a></li>
+                <li><a href="/how-to-hire-for-small-business.html" class="text-blue-600 hover:underline font-medium">How to hire for a small business: a step-by-step guide</a></li>
+                <li><a href="/semantic-search-recruitment.html" class="text-blue-600 hover:underline font-medium">How semantic search works in recruitment</a></li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-10 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <a href="/" class="text-2xl font-bold">Cv Bam Bam</a>
+            <p class="text-gray-400 mt-2">Corporate-grade semantic CV parsing for small teams. Export to CSV. Hire smarter.</p>
+            <p class="text-gray-500 text-sm mt-6">© 2024 Cv Bam Bam. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
