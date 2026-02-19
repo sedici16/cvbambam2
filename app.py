@@ -21,6 +21,8 @@ from fastapi.staticfiles import StaticFiles
 
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/", StaticFiles(directory="templates", html=True), name="static")
+
 
 
 def compute_similarity_remote(ideal_profile, text_blocks):
@@ -203,9 +205,9 @@ with gr.Blocks(title="Custom CV Extractor") as demo:
 
 
 
-@app.get("/", include_in_schema=False)
-def root():
-    return FileResponse("templates/index.html")
+#@app.get("/", include_in_schema=False)
+#def root():
+#    return FileResponse("templates/index.html")
 
 
 
