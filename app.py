@@ -15,8 +15,11 @@ from datetime import datetime, timedelta
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form, Request, Depends
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
+# LOCAL MODEL — re-enable on 2GB+ RAM server
+# from sentence_transformers import SentenceTransformer
+# from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+from huggingface_hub import InferenceClient as HFClient
 from typing import List, Optional
 from pydantic import BaseModel
 from passlib.context import CryptContext
@@ -31,7 +34,9 @@ MAX_DOCS = 5
 FREE_CV_LIMIT = 10
 DB_FILE = os.getenv("DB_PATH", "talent_pool.db")
 
-_model = SentenceTransformer("all-MiniLM-L6-v2")
+# LOCAL MODEL — re-enable on 2GB+ RAM server
+# _model = SentenceTransformer("all-MiniLM-L6-v2")
+EMBED_MODEL = "BAAI/bge-small-en-v1.5"
 SESSION_DAYS = 7
 
 pwd_context = CryptContext(schemes=["sha256_crypt"], deprecated="auto")
@@ -224,8 +229,26 @@ def update_last_active(user_id: str):
 # ── CV processing helpers ──────────────────────────────────────────────────────
 
 def compute_similarity(ideal_profile, text_blocks):
-    embeddings = _model.encode([ideal_profile] + text_blocks)
-    scores = cosine_similarity([embeddings[0]], embeddings[1:])[0]
+    # LOCAL MODEL — re-enable on 2GB+ RAM server
+    # embeddings = _model.encode([ideal_profile] + text_blocks)
+    # scores = cosine_similarity([embeddings[0]], embeddings[1:])[0]
+    # return scores.tolist()
+    hf = HFClient(provider="hf-inference", api_key=os.getenv("HF_TOKEN"))
+    all_texts = [ideal_profile] + text_blocks
+    vecs = []
+    for text in all_texts:
+        result = hf.feature_extraction(text, model=EMBED_MODEL)
+        arr = np.array(result, dtype=np.float32)
+        if arr.ndim > 1:
+            arr = arr[0]
+        vecs.append(arr)
+    vecs = np.array(vecs)
+    query = vecs[0:1]
+    docs = vecs[1:]
+    # cosine similarity manually
+    scores = (docs @ query.T).flatten() / (
+        np.linalg.norm(docs, axis=1) * np.linalg.norm(query) + 1e-9
+    )
     return scores.tolist()
 
 
