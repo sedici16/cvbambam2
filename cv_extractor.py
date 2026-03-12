@@ -12,6 +12,59 @@ client = InferenceClient(
     api_key=HF_TOKEN
 )
 
+def oracle_analyse(candidates: list, job_description: str) -> list:
+    """
+    Takes a list of dicts with keys: name, score, cv_text (cleaned)
+    Returns a list of analysis dicts per candidate.
+    """
+    results = []
+    for c in candidates:
+        prompt = f"""You are an expert recruiter reviewing a candidate for the following role.
+
+JOB DESCRIPTION:
+{job_description}
+
+CANDIDATE: {c['name']}
+MATCH SCORE (semantic): {c['score']}%
+
+CV TEXT:
+{c['cv_text']}
+
+Analyse this candidate critically and honestly. Return a JSON object with exactly these fields:
+
+{{
+  "name": "candidate name",
+  "fit_summary": "2-3 sentences on how well they match the role and why",
+  "strengths": ["strength 1", "strength 2", "strength 3"],
+  "red_flags": ["any overestimation, gaps, vague claims, short tenures, or inconsistencies — empty list if none"],
+  "overestimation": "one sentence — do they appear to have inflated their experience or skills? Say 'No signs of overestimation' if clean",
+  "verdict": "Interview" | "Proceed with caution" | "Pass",
+  "verdict_reason": "one sentence explaining the verdict"
+}}
+
+Be direct. Do not be kind for the sake of it. If there are red flags, name them specifically.
+Return only the JSON object, no markdown, no extra text.
+"""
+        try:
+            response = client.chat.completions.create(
+                model="deepseek-ai/DeepSeek-V3-0324",
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.2,
+                max_tokens=1500,
+            )
+            import json, re
+            raw = response.choices[0].message.content or ""
+            # Strip markdown code fences if present
+            raw = re.sub(r"^```(json)?", "", raw.strip(), flags=re.IGNORECASE).strip("` \n")
+            if not raw:
+                raise ValueError("Empty response from LLM")
+            result = json.loads(raw)
+            results.append(result)
+        except Exception as e:
+            results.append({"name": c["name"], "error": str(e)})
+    return results
+
+
 def extract_json(input_text):
     prompt = f"""
     Please extract the following fields in JSON format from the CV text, if available:

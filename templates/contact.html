@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Cv Bam Bam — get in touch with any questions about the tool, pricing, or your account.">
+    <title>Contact | Cv Bam Bam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-5xl">
+            <a href="/" class="text-2xl font-bold text-blue-600">Cv Bam Bam</a>
+            <a href="/app" class="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-blue-700 transition">Try Free</a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-16 max-w-xl">
+
+        <h1 class="text-4xl font-bold text-gray-900 mb-3">Get in touch</h1>
+        <p class="text-gray-500 mb-10 text-lg">Questions about the tool, pricing, or your account — send a message and I'll get back to you.</p>
+
+        <form id="contactForm" class="space-y-5">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Your name</label>
+                <input type="text" id="name" name="name" required placeholder="Jane Smith"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+                <input type="email" id="email" name="email" required placeholder="jane@company.com"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                <textarea id="message" name="message" required rows="5" placeholder="What can I help with?"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white resize-none"></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn"
+                class="w-full bg-blue-600 text-white font-bold py-3 rounded-full hover:bg-blue-700 transition text-sm">
+                Send message
+            </button>
+        </form>
+
+        <div id="successMsg" class="hidden mt-8 bg-green-50 border border-green-200 rounded-xl p-6 text-center">
+            <i class="fas fa-check-circle text-green-500 text-3xl mb-3"></i>
+            <p class="text-green-800 font-semibold text-lg">Message sent!</p>
+            <p class="text-green-600 text-sm mt-1">I'll get back to you as soon as possible.</p>
+        </div>
+
+        <div id="errorMsg" class="hidden mt-8 bg-red-50 border border-red-200 rounded-xl p-5 text-sm text-red-700">
+            Something went wrong sending your message. Please try again or reach out on
+            <a href="https://wa.me/447981395253" target="_blank" class="underline font-medium">WhatsApp</a>.
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-900 text-white py-10 mt-16">
+        <div class="container mx-auto px-6 text-center max-w-5xl">
+            <a href="/" class="text-2xl font-bold">Cv Bam Bam</a>
+            <p class="text-gray-400 mt-2 text-sm">Corporate-grade semantic CV parsing for small teams. Export to CSV. Hire smarter.</p>
+            <p class="text-gray-500 text-xs mt-6">© 2026 Cv Bam Bam. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            const body = new FormData();
+            body.append('name', document.getElementById('name').value);
+            body.append('email', document.getElementById('email').value);
+            body.append('message', document.getElementById('message').value);
+
+            try {
+                const res = await fetch('/contact', { method: 'POST', body });
+                if (res.ok) {
+                    document.getElementById('contactForm').classList.add('hidden');
+                    document.getElementById('successMsg').classList.remove('hidden');
+                } else {
+                    throw new Error();
+                }
+            } catch {
+                document.getElementById('errorMsg').classList.remove('hidden');
+                btn.textContent = 'Send message';
+                btn.disabled = false;
+            }
+        });
+    </script>
+
+</body>
+</html>

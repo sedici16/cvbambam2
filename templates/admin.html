@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Bam Bam | Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen font-sans">
+
+    <nav class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 text-blue-600 font-bold text-xl">
+            <i class="fa-solid fa-bolt"></i> CV Bam Bam
+            <span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full font-semibold ml-1">Admin</span>
+        </a>
+        <form method="POST" action="/auth/logout">
+            <button class="text-sm text-gray-500 hover:text-red-500 transition"><i class="fa-solid fa-right-from-bracket mr-1"></i>Logout</button>
+        </form>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-6 py-10">
+
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Dashboard</h1>
+
+        <!-- Stats -->
+        <div id="stats" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"></div>
+
+        <!-- Upgrade requests -->
+        <div id="upgradeSection" class="hidden bg-white rounded-2xl border border-yellow-200 shadow-sm overflow-hidden mb-8">
+            <div class="px-6 py-4 border-b border-yellow-100 bg-yellow-50 flex items-center gap-2">
+                <i class="fa-solid fa-crown text-yellow-500"></i>
+                <h2 class="font-bold text-yellow-800">Pending Upgrade Requests</h2>
+                <span id="pendingCount" class="ml-auto text-xs bg-yellow-200 text-yellow-800 px-2 py-0.5 rounded-full font-semibold"></span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
+                        <tr>
+                            <th class="px-6 py-3">Email</th>
+                            <th class="px-6 py-3">Wise Reference</th>
+                            <th class="px-6 py-3">Message</th>
+                            <th class="px-6 py-3">Date</th>
+                            <th class="px-6 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="upgradeTable" class="divide-y divide-gray-100"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Users table -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+                <h2 class="font-bold text-gray-800">Users</h2>
+                <span id="userCount" class="text-sm text-gray-400"></span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
+                        <tr>
+                            <th class="px-6 py-3">Email</th>
+                            <th class="px-6 py-3">Plan</th>
+                            <th class="px-6 py-3">CVs used</th>
+                            <th class="px-6 py-3">Signed up</th>
+                            <th class="px-6 py-3">Last active</th>
+                            <th class="px-6 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTable" class="divide-y divide-gray-100"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        async function loadStats() {
+            const res = await fetch('/admin/stats');
+            const data = await res.json();
+            const stats = [
+                { label: 'Total Users', value: data.total_users, icon: 'fa-users', color: 'blue' },
+                { label: 'Pro Users', value: data.pro_users, icon: 'fa-crown', color: 'yellow' },
+                { label: 'Free Users', value: data.free_users, icon: 'fa-user', color: 'gray' },
+                { label: 'CVs Processed', value: data.total_cvs_processed, icon: 'fa-file-lines', color: 'green' },
+            ];
+            const container = document.getElementById('stats');
+            stats.forEach(s => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl border border-gray-200 p-5 shadow-sm';
+                card.innerHTML = `
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-9 h-9 rounded-lg bg-${s.color}-50 flex items-center justify-center text-${s.color}-500">
+                            <i class="fa-solid ${s.icon}"></i>
+                        </div>
+                        <span class="text-sm text-gray-500">${s.label}</span>
+                    </div>
+                    <p class="text-3xl font-bold text-gray-800">${s.value}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        async function loadUsers() {
+            const res = await fetch('/admin/users');
+            const data = await res.json();
+            const tbody = document.getElementById('usersTable');
+            tbody.innerHTML = '';
+            document.getElementById('userCount').textContent = `${data.users.length} accounts`;
+
+            data.users.forEach(u => {
+                const isPro = u.plan === 'pro';
+                const isAdmin = u.role === 'admin';
+                const signedUp = new Date(u.created_at).toLocaleDateString('en-GB');
+                const lastActive = u.last_active ? new Date(u.last_active).toLocaleDateString('en-GB') : '—';
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gray-50';
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-medium text-gray-800">
+                        ${u.email}
+                        ${isAdmin ? '<span class="ml-2 text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">admin</span>' : ''}
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-xs font-semibold px-2 py-1 rounded-full ${isPro ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'}">
+                            ${u.plan.toUpperCase()}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-gray-600">
+                        ${u.cvs_processed}${!isPro ? ' / 10' : ''}
+                    </td>
+                    <td class="px-6 py-4 text-gray-500">${signedUp}</td>
+                    <td class="px-6 py-4 text-gray-500">${lastActive}</td>
+                    <td class="px-6 py-4">
+                        ${!isAdmin ? `
+                        <div class="flex gap-2">
+                            <button onclick="togglePlan('${u.id}', '${isPro ? 'free' : 'pro'}')"
+                                class="text-xs px-3 py-1 rounded-lg border transition ${isPro ? 'border-gray-300 text-gray-600 hover:border-red-300 hover:text-red-600' : 'border-blue-300 text-blue-600 hover:bg-blue-50'}">
+                                ${isPro ? 'Downgrade' : 'Upgrade to Pro'}
+                            </button>
+                            <button onclick="deleteUser('${u.id}', '${u.email}')"
+                                class="text-xs px-3 py-1 rounded-lg border border-gray-200 text-gray-400 hover:border-red-300 hover:text-red-500 transition">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                        ` : ''}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function togglePlan(userId, newPlan) {
+            const form = new FormData();
+            form.append('plan', newPlan);
+            await fetch(`/admin/users/${userId}/plan`, { method: 'POST', body: form });
+            loadUsers();
+            loadStats();
+        }
+
+        async function deleteUser(userId, email) {
+            if (!confirm(`Delete user ${email} and all their data?`)) return;
+            await fetch(`/admin/users/${userId}`, { method: 'DELETE' });
+            loadUsers();
+            loadStats();
+        }
+
+        async function loadUpgradeRequests() {
+            const res = await fetch('/admin/upgrade-requests');
+            const data = await res.json();
+            const pending = data.requests.filter(r => r.status === 'pending');
+            const section = document.getElementById('upgradeSection');
+            const tbody = document.getElementById('upgradeTable');
+            tbody.innerHTML = '';
+
+            if (!pending.length) { section.classList.add('hidden'); return; }
+            section.classList.remove('hidden');
+            document.getElementById('pendingCount').textContent = `${pending.length} pending`;
+
+            pending.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gray-50';
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-medium text-gray-800">${r.email}</td>
+                    <td class="px-6 py-4 font-mono text-blue-600">${r.wise_reference}</td>
+                    <td class="px-6 py-4 text-gray-500">${r.message || '—'}</td>
+                    <td class="px-6 py-4 text-gray-400">${new Date(r.created_at).toLocaleDateString('en-GB')}</td>
+                    <td class="px-6 py-4">
+                        <div class="flex gap-2">
+                            <button onclick="approveUpgrade('${r.id}')"
+                                class="text-xs px-3 py-1 rounded-lg bg-green-100 text-green-700 hover:bg-green-200 font-semibold transition">
+                                <i class="fa-solid fa-check mr-1"></i>Approve
+                            </button>
+                            <button onclick="rejectUpgrade('${r.id}')"
+                                class="text-xs px-3 py-1 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 font-semibold transition">
+                                Reject
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function approveUpgrade(id) {
+            await fetch(`/admin/upgrade-requests/${id}/approve`, { method: 'POST' });
+            loadUpgradeRequests();
+            loadUsers();
+            loadStats();
+        }
+
+        async function rejectUpgrade(id) {
+            await fetch(`/admin/upgrade-requests/${id}/reject`, { method: 'POST' });
+            loadUpgradeRequests();
+        }
+
+        loadStats();
+        loadUsers();
+        loadUpgradeRequests();
+    </script>
+
+</body>
+</html>

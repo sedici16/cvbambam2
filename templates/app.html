@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Bam Bam | Match Candidates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .drop-zone.dragover { border-color: #3b82f6; background-color: #eff6ff; }
+        .file-tag { animation: fadeIn 0.2s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .spinner { border-top-color: #3b82f6; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .score-bar { transition: width 0.6s ease; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans">
+
+    <!-- Nav -->
+    <nav class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 text-blue-600 font-bold text-xl">
+            <i class="fa-solid fa-bolt"></i> CV Bam Bam
+        </a>
+        <div class="flex items-center gap-4">
+            <a href="/pool" class="text-sm text-gray-500 hover:text-blue-600 transition"><i class="fa-solid fa-users mr-1"></i>Talent Pool</a>
+            <span id="userBadge" class="text-xs text-gray-400"></span>
+            <a href="/settings" class="text-sm text-gray-400 hover:text-blue-600 transition"><i class="fa-solid fa-gear"></i></a>
+            <form method="POST" action="/auth/logout">
+                <button class="text-sm text-gray-400 hover:text-red-500 transition"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </form>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-10">
+
+        <h1 class="text-3xl font-bold text-gray-800 mb-1">Match Candidates</h1>
+        <p class="text-gray-500 mb-8">Upload CVs and describe your ideal candidate. We'll rank them by fit.</p>
+
+        <form id="uploadForm" class="space-y-6">
+
+            <!-- Drop zone -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">CVs <span class="text-gray-400 font-normal">(PDF or DOCX, max 5)</span></label>
+                <div id="dropZone" class="drop-zone border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition">
+                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-400 mb-3"></i>
+                    <p class="text-gray-500 text-sm">Drag & drop files here or <span class="text-blue-500 font-semibold">browse</span></p>
+                    <input type="file" id="fileInput" multiple accept=".pdf,.docx" class="hidden">
+                </div>
+                <div id="fileTags" class="flex flex-wrap gap-2 mt-3"></div>
+            </div>
+
+            <!-- Job description -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Ideal Candidate Profile</label>
+                <textarea
+                    id="idealProfile"
+                    rows="3"
+                    placeholder="e.g. 5+ years experience in Python, NLP, and FastAPI"
+                    class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+                >5+ years experience in Python and NLP</textarea>
+                <p class="text-xs text-gray-400 mt-1">Keep it concise — 1 to 2 sentences works best.</p>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" id="submitBtn"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-magnifying-glass"></i> Analyse CVs
+            </button>
+
+        </form>
+
+        <!-- Loading -->
+        <div id="loading" class="hidden mt-10 flex flex-col items-center gap-4 text-gray-500">
+            <div class="spinner w-10 h-10 rounded-full border-4 border-gray-200"></div>
+            <p id="loadingMsg" class="text-sm">Extracting CV data...</p>
+        </div>
+
+        <!-- Error -->
+        <div id="errorBox" class="hidden mt-6 bg-red-50 border border-red-200 text-red-700 rounded-xl px-5 py-4 text-sm"></div>
+
+        <!-- Results -->
+        <div id="results" class="hidden mt-10">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold text-gray-800">Results</h2>
+                <a id="csvDownload" href="#" class="text-sm bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition">
+                    <i class="fa-solid fa-download"></i> Download CSV
+                </a>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+                        <tr id="tableHead"></tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-gray-100 bg-white"></tbody>
+                </table>
+            </div>
+
+            <!-- Save to pool -->
+            <div class="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-6">
+                <h3 class="text-base font-bold text-blue-800 mb-1"><i class="fa-solid fa-users mr-2"></i>Save to Talent Pool</h3>
+                <p class="text-sm text-blue-600 mb-4">Select candidates to save and assign them a category for future matching.</p>
+
+                <div class="flex gap-3 mb-4">
+                    <input id="categoryInput" type="text" placeholder="Category (e.g. Tech, Marketing, Sales)"
+                        class="flex-1 border border-blue-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+
+                <div id="saveList" class="space-y-2 mb-4"></div>
+
+                <button onclick="saveSelected()"
+                    class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2 rounded-lg transition flex items-center gap-2">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Selected
+                </button>
+                <div id="saveStatus" class="mt-3 text-sm"></div>
+            </div>
+
+            <!-- Oracle Mode -->
+            <div class="mt-8 bg-gray-900 border border-gray-700 rounded-xl p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <div>
+                        <h3 class="text-base font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-eye text-yellow-400"></i> Oracle Mode
+                        </h3>
+                        <p class="text-sm text-gray-400 mt-1">Deep LLM analysis of your top candidates — fit, red flags, overestimation, and a verdict.</p>
+                    </div>
+                    <button id="oracleBtn" onclick="runOracle()"
+                        class="bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold text-sm px-5 py-2 rounded-lg transition flex items-center gap-2 flex-shrink-0">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Run Oracle
+                    </button>
+                </div>
+                <div id="oracleStatus" class="text-sm text-gray-400 mt-3 hidden">
+                    <i class="fa-solid fa-spinner fa-spin mr-2"></i> Analysing candidates... this takes 15–30 seconds.
+                </div>
+                <div id="oracleResults" class="mt-5 space-y-5"></div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Load user info
+        fetch('/auth/me').then(r => r.json()).then(u => {
+            const badge = document.getElementById('userBadge');
+            badge.textContent = u.plan === 'free'
+                ? `${u.email} · ${u.cvs_remaining} CVs left`
+                : `${u.email} · Pro`;
+            if (u.plan === 'free' && u.cvs_remaining === 0) {
+                const banner = document.createElement('div');
+                banner.className = 'bg-yellow-50 border border-yellow-200 rounded-xl px-5 py-4 mb-6 flex items-center justify-between';
+                banner.innerHTML = `
+                    <div class="text-sm text-yellow-800"><i class="fa-solid fa-crown mr-2 text-yellow-500"></i>You've used all <strong>10 free CVs</strong>. Upgrade to Pro for unlimited access.</div>
+                    <a href="/upgrade" class="ml-4 bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition flex-shrink-0">Upgrade</a>
+                `;
+                document.querySelector('main').prepend(banner);
+            }
+            if (u.role === 'admin') {
+                const link = document.createElement('a');
+                link.href = '/admin';
+                link.className = 'text-sm text-red-500 hover:text-red-700 font-semibold transition';
+                link.innerHTML = '<i class="fa-solid fa-gauge mr-1"></i>Admin';
+                document.getElementById('userBadge').after(link);
+            }
+        });
+
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileTags = document.getElementById('fileTags');
+        let selectedFiles = [];
+        let saveableData = [];
+        let oracleCandidates = [];
+        let currentJobDescription = '';
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            addFiles([...e.dataTransfer.files]);
+        });
+        fileInput.addEventListener('change', () => addFiles([...fileInput.files]));
+
+        function addFiles(files) {
+            files.forEach(f => {
+                if (selectedFiles.length >= 5) return;
+                if (!f.name.endsWith('.pdf') && !f.name.endsWith('.docx')) return;
+                if (selectedFiles.find(x => x.name === f.name)) return;
+                selectedFiles.push(f);
+            });
+            renderTags();
+        }
+
+        function renderTags() {
+            fileTags.innerHTML = '';
+            selectedFiles.forEach((f, i) => {
+                const tag = document.createElement('div');
+                tag.className = 'file-tag flex items-center gap-2 bg-blue-50 border border-blue-200 text-blue-700 text-xs px-3 py-1.5 rounded-full';
+                tag.innerHTML = `<i class="fa-solid fa-file-lines"></i> ${f.name} <button onclick="removeFile(${i})" class="ml-1 text-blue-400 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>`;
+                fileTags.appendChild(tag);
+            });
+        }
+
+        function removeFile(i) {
+            selectedFiles.splice(i, 1);
+            renderTags();
+        }
+
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const profile = document.getElementById('idealProfile').value.trim();
+            currentJobDescription = profile;
+            if (!selectedFiles.length) return showError('Please upload at least one CV.');
+            if (!profile) return showError('Please enter an ideal candidate profile.');
+
+            const formData = new FormData();
+            selectedFiles.forEach(f => formData.append('files', f));
+            formData.append('ideal_profile', profile);
+
+            showLoading(true);
+            hideError();
+            document.getElementById('results').classList.add('hidden');
+
+            try {
+                document.getElementById('loadingMsg').textContent = 'Extracting CV data...';
+                const res = await fetch('/process', { method: 'POST', body: formData });
+                if (res.status === 403) {
+                    const box = document.getElementById('errorBox');
+                    box.innerHTML = `
+                        <div class="flex items-center justify-between gap-4 flex-wrap">
+                            <span><i class="fa-solid fa-crown text-yellow-500 mr-2"></i>You've used all <strong>10 free CVs</strong>. Upgrade to Pro for unlimited access.</span>
+                            <a href="/upgrade" class="flex-shrink-0 bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">Upgrade to Pro →</a>
+                        </div>`;
+                    box.classList.remove('hidden');
+                    return;
+                }
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.detail || 'Server error');
+                }
+                document.getElementById('loadingMsg').textContent = 'Computing similarity scores...';
+                const data = await res.json();
+                renderResults(data);
+            } catch (err) {
+                showError(err.message);
+            } finally {
+                showLoading(false);
+            }
+        });
+
+        function renderResults(data) {
+            if (!data.rows || !data.rows.length) return showError('No results returned.');
+
+            const head = document.getElementById('tableHead');
+            const body = document.getElementById('tableBody');
+            head.innerHTML = '';
+            body.innerHTML = '';
+
+            const cols = data.columns;
+            cols.forEach(col => {
+                const th = document.createElement('th');
+                th.className = 'px-4 py-3';
+                th.textContent = col.replace(/_/g, ' ');
+                head.appendChild(th);
+            });
+
+            data.rows.forEach((row, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = idx === 0 ? 'bg-blue-50' : '';
+                cols.forEach(col => {
+                    const td = document.createElement('td');
+                    td.className = 'px-4 py-3 text-gray-700 max-w-xs truncate';
+                    if (col === 'similarity') {
+                        const score = parseFloat(row[col]);
+                        const pct = Math.round(score * 100);
+                        td.innerHTML = `
+                            <div class="flex items-center gap-2">
+                                <div class="w-20 bg-gray-200 rounded-full h-2">
+                                    <div class="score-bar bg-blue-500 h-2 rounded-full" style="width:${pct}%"></div>
+                                </div>
+                                <span class="font-semibold text-blue-700">${pct}%</span>
+                            </div>`;
+                    } else {
+                        td.textContent = row[col] ?? '';
+                        td.title = row[col] ?? '';
+                    }
+                    tr.appendChild(td);
+                });
+                body.appendChild(tr);
+            });
+
+            document.getElementById('csvDownload').href = '/download/' + data.csv_file;
+
+            // Store oracle candidates
+            oracleCandidates = data.oracle_candidates || [];
+            document.getElementById('oracleResults').innerHTML = '';
+            document.getElementById('oracleStatus').classList.add('hidden');
+
+            // Render save list
+            saveableData = data.saveable || [];
+            const saveList = document.getElementById('saveList');
+            saveList.innerHTML = '';
+            saveableData.forEach((c, i) => {
+                const div = document.createElement('label');
+                div.className = 'flex items-center gap-3 bg-white border border-blue-100 rounded-lg px-4 py-2 cursor-pointer hover:bg-blue-50';
+                div.innerHTML = `
+                    <input type="checkbox" class="save-checkbox w-4 h-4 accent-blue-600" data-index="${i}" checked>
+                    <span class="text-sm text-gray-700 font-medium">${c.name}</span>`;
+                saveList.appendChild(div);
+            });
+
+            document.getElementById('results').classList.remove('hidden');
+        }
+
+        async function runOracle() {
+            if (!oracleCandidates.length) return;
+            const btn = document.getElementById('oracleBtn');
+            const status = document.getElementById('oracleStatus');
+            const container = document.getElementById('oracleResults');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Analysing...';
+            status.classList.remove('hidden');
+            container.innerHTML = '';
+
+            try {
+                const res = await fetch('/oracle', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ candidates: oracleCandidates, job_description: currentJobDescription })
+                });
+                const data = await res.json();
+                status.classList.add('hidden');
+
+                data.results.forEach(c => {
+                    if (c.error) {
+                        container.innerHTML += `<div class="text-red-400 text-sm">${c.name}: ${c.error}</div>`;
+                        return;
+                    }
+                    const verdictColor = c.verdict === 'Interview'
+                        ? 'bg-green-500' : c.verdict === 'Proceed with caution'
+                        ? 'bg-yellow-400 text-gray-900' : 'bg-red-500';
+                    const verdictText = c.verdict === 'Interview'
+                        ? 'text-green-400' : c.verdict === 'Proceed with caution'
+                        ? 'text-yellow-400' : 'text-red-400';
+
+                    const strengths = (c.strengths || []).map(s =>
+                        `<li class="flex gap-2"><i class="fas fa-check text-green-400 mt-0.5 flex-shrink-0"></i>${s}</li>`
+                    ).join('');
+                    const flags = (c.red_flags || []).map(f =>
+                        `<li class="flex gap-2"><i class="fas fa-exclamation-triangle text-yellow-400 mt-0.5 flex-shrink-0"></i>${f}</li>`
+                    ).join('');
+
+                    container.innerHTML += `
+                        <div class="bg-gray-800 border border-gray-700 rounded-xl p-5">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-white font-bold text-base">${c.name}</h4>
+                                <span class="${verdictText} font-bold text-sm border border-current px-3 py-1 rounded-full">${c.verdict}</span>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4 leading-relaxed">${c.fit_summary}</p>
+                            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase mb-2">Strengths</p>
+                                    <ul class="space-y-1 text-sm text-gray-300">${strengths || '<li class="text-gray-500">None noted</li>'}</ul>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase mb-2">Red Flags</p>
+                                    <ul class="space-y-1 text-sm text-gray-300">${flags || '<li class="text-gray-500">None identified</li>'}</ul>
+                                </div>
+                            </div>
+                            <div class="border-t border-gray-700 pt-3">
+                                <p class="text-xs font-semibold text-gray-400 uppercase mb-1">Overestimation check</p>
+                                <p class="text-sm text-gray-300">${c.overestimation}</p>
+                            </div>
+                            <div class="mt-3 bg-gray-900 rounded-lg px-4 py-2">
+                                <p class="text-xs font-semibold text-gray-400 uppercase mb-1">Verdict reasoning</p>
+                                <p class="text-sm text-gray-300">${c.verdict_reason}</p>
+                            </div>
+                        </div>`;
+                });
+            } catch(e) {
+                status.classList.add('hidden');
+                container.innerHTML = '<p class="text-red-400 text-sm">Oracle analysis failed. Please try again.</p>';
+            }
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Run Oracle';
+        }
+
+        async function saveSelected() {
+            const category = document.getElementById('categoryInput').value.trim();
+            if (!category) return setStatus('Please enter a category.', 'error');
+
+            const checkboxes = document.querySelectorAll('.save-checkbox:checked');
+            if (!checkboxes.length) return setStatus('No candidates selected.', 'error');
+
+            let saved = 0, skipped = 0;
+            for (const cb of checkboxes) {
+                const candidate = saveableData[parseInt(cb.dataset.index)];
+                const res = await fetch('/save-candidate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: candidate.name,
+                        category: category,
+                        raw: candidate.raw,
+                        text_for_match: candidate.text_for_match,
+                    })
+                });
+                const data = await res.json();
+                if (data.status === 'saved') saved++;
+                else skipped++;
+            }
+
+            const msg = `${saved} saved${skipped ? `, ${skipped} already in pool` : ''}.`;
+            setStatus(msg, 'success');
+        }
+
+        function setStatus(msg, type) {
+            const el = document.getElementById('saveStatus');
+            el.textContent = msg;
+            el.className = 'mt-3 text-sm ' + (type === 'success' ? 'text-green-600' : 'text-red-500');
+        }
+
+        function showLoading(on) {
+            document.getElementById('loading').classList.toggle('hidden', !on);
+            document.getElementById('submitBtn').disabled = on;
+            document.getElementById('submitBtn').classList.toggle('opacity-50', on);
+        }
+
+        function showError(msg) {
+            const box = document.getElementById('errorBox');
+            box.textContent = msg;
+            box.classList.remove('hidden');
+        }
+
+        function hideError() {
+            document.getElementById('errorBox').classList.add('hidden');
+        }
+
+    </script>
+
+</body>
+</html>

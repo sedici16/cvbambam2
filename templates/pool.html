@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Bam Bam | Talent Pool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .spinner { border-top-color: #3b82f6; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .score-bar { transition: width 0.6s ease; }
+        .tab-btn.active { background: #2563eb; color: white; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans">
+
+    <!-- Nav -->
+    <nav class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 text-blue-600 font-bold text-xl">
+            <i class="fa-solid fa-bolt"></i> CV Bam Bam
+        </a>
+        <div class="flex items-center gap-4">
+            <a href="/app" class="text-sm text-gray-500 hover:text-blue-600 transition"><i class="fa-solid fa-upload mr-1"></i>Upload CVs</a>
+            <span id="userBadge" class="text-xs text-gray-400"></span>
+            <a href="/settings" class="text-sm text-gray-400 hover:text-blue-600 transition"><i class="fa-solid fa-gear"></i></a>
+            <form method="POST" action="/auth/logout">
+                <button class="text-sm text-gray-400 hover:text-red-500 transition"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </form>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-10">
+
+        <h1 class="text-3xl font-bold text-gray-800 mb-1">Talent Pool</h1>
+        <p class="text-gray-500 mb-8">Match a new job against your saved candidates, filtered by category.</p>
+
+        <!-- Tabs -->
+        <div class="flex gap-2 mb-8">
+            <button onclick="showTab('match')" id="tab-match"
+                class="tab-btn active text-sm font-semibold px-5 py-2 rounded-lg border border-blue-200 transition">
+                <i class="fa-solid fa-ranking-star mr-1"></i> Match a Job
+            </button>
+            <button onclick="showTab('browse')" id="tab-browse"
+                class="tab-btn text-sm font-semibold px-5 py-2 rounded-lg border border-gray-200 text-gray-600 hover:border-blue-200 transition">
+                <i class="fa-solid fa-list mr-1"></i> Browse Pool
+            </button>
+            <button onclick="showTab('search')" id="tab-search"
+                class="tab-btn text-sm font-semibold px-5 py-2 rounded-lg border border-gray-200 text-gray-600 hover:border-blue-200 transition">
+                <i class="fa-solid fa-magnifying-glass mr-1"></i> Search
+            </button>
+        </div>
+
+        <!-- ── TAB: Match a Job ── -->
+        <div id="tab-match-panel">
+            <form id="matchForm" class="space-y-5">
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+                    <div class="flex gap-2">
+                        <select id="categorySelect"
+                            class="flex-1 border border-gray-300 rounded-xl px-4 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <option value="">Loading categories...</option>
+                        </select>
+                        <button type="button" onclick="loadCategories()"
+                            class="text-sm text-blue-500 hover:text-blue-700 px-3">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Job Description</label>
+                    <textarea id="jobDescription" rows="3"
+                        placeholder="e.g. Senior Python developer with NLP and FastAPI experience"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
+                    <p class="text-xs text-gray-400 mt-1">Keep it concise — 1 to 2 sentences works best.</p>
+                </div>
+
+                <button type="submit" id="matchBtn"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-ranking-star"></i> Rank Candidates
+                </button>
+            </form>
+
+            <!-- Loading -->
+            <div id="matchLoading" class="hidden mt-10 flex flex-col items-center gap-4 text-gray-500">
+                <div class="spinner w-10 h-10 rounded-full border-4 border-gray-200"></div>
+                <p class="text-sm">Computing similarity scores...</p>
+            </div>
+
+            <!-- Error -->
+            <div id="matchError" class="hidden mt-6 bg-red-50 border border-red-200 text-red-700 rounded-xl px-5 py-4 text-sm"></div>
+
+            <!-- Match results -->
+            <div id="matchResults" class="hidden mt-10">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Ranked Candidates</h2>
+                <div id="matchCards" class="space-y-3"></div>
+
+                <!-- Shortlist Email -->
+                <div class="mt-6 bg-yellow-50 border border-yellow-200 rounded-xl p-6">
+                    <h3 class="text-base font-bold text-yellow-800 mb-1"><i class="fa-solid fa-envelope mr-2"></i>Generate Shortlist Email</h3>
+                    <p class="text-sm text-yellow-700 mb-4">Generate a summary email for your hiring manager with the top candidates.</p>
+                    <div class="flex gap-3 mb-4">
+                        <input id="poolJobTitle" type="text" placeholder="Job title (e.g. Senior AI Engineer)"
+                            class="flex-1 border border-yellow-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                        <input id="poolHiringManager" type="text" placeholder="Hiring manager name"
+                            class="flex-1 border border-yellow-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                    </div>
+                    <button onclick="generatePoolEmail()"
+                        class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-semibold px-5 py-2 rounded-lg transition flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Email
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── TAB: Search ── -->
+        <div id="tab-search-panel" class="hidden">
+
+            <div class="grid grid-cols-2 gap-4 mb-5">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Name</label>
+                    <input id="searchName" type="text" placeholder="e.g. Alice"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Location</label>
+                    <input id="searchLocation" type="text" placeholder="e.g. London"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Skills (keyword)</label>
+                    <input id="searchSkills" type="text" placeholder="e.g. Python"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Min. Years Experience</label>
+                    <input id="searchExp" type="number" min="0" placeholder="e.g. 5"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+            </div>
+
+            <div class="flex gap-3 mb-6">
+                <button onclick="runSearch()"
+                    class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2 rounded-xl transition flex items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass"></i> Search
+                </button>
+                <button onclick="clearSearch()"
+                    class="bg-gray-100 hover:bg-gray-200 text-gray-600 text-sm font-semibold px-5 py-2 rounded-xl transition">
+                    Clear
+                </button>
+            </div>
+
+            <div id="searchCount" class="hidden text-sm text-gray-400 mb-4"></div>
+            <div id="searchEmpty" class="hidden text-gray-400 text-sm">No candidates match your filters.</div>
+            <div id="searchList" class="space-y-3"></div>
+        </div>
+
+        <!-- ── TAB: Browse Pool ── -->
+        <div id="tab-browse-panel" class="hidden">
+
+            <div class="flex gap-3 mb-5">
+                <select id="browseCategory"
+                    class="border border-gray-300 rounded-xl px-4 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <option value="">All categories</option>
+                </select>
+                <button onclick="loadBrowse()"
+                    class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition">
+                    <i class="fa-solid fa-filter mr-1"></i> Filter
+                </button>
+            </div>
+
+            <div id="browseEmpty" class="hidden text-gray-400 text-sm">No candidates in pool yet. <a href="/app" class="text-blue-500 underline">Upload CVs</a> to get started.</div>
+            <div id="browseList" class="space-y-3"></div>
+        </div>
+
+    </main>
+
+    <!-- Email Modal -->
+    <div id="emailModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl flex flex-col max-h-[90vh]">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+                <h3 class="font-bold text-gray-800"><i class="fa-solid fa-envelope mr-2 text-yellow-500"></i>Shortlist Email</h3>
+                <button onclick="closeEmailModal()" class="text-gray-400 hover:text-gray-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <textarea id="emailContent" rows="18"
+                class="flex-1 px-6 py-4 text-sm text-gray-700 font-mono resize-none focus:outline-none overflow-y-auto"></textarea>
+            <div class="px-6 py-4 border-t border-gray-100 flex gap-3">
+                <button onclick="copyEmail()"
+                    class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2 rounded-lg transition flex items-center gap-2">
+                    <i class="fa-solid fa-copy"></i> Copy to Clipboard
+                </button>
+                <div id="copyConfirm" class="hidden text-green-600 text-sm flex items-center gap-1">
+                    <i class="fa-solid fa-check"></i> Copied!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load user info
+        fetch('/auth/me').then(r => r.json()).then(u => {
+            const badge = document.getElementById('userBadge');
+            badge.textContent = u.plan === 'free' ? `${u.email} · ${u.cvs_remaining} CVs left` : `${u.email} · Pro`;
+            if (u.role === 'admin') {
+                const link = document.createElement('a');
+                link.href = '/admin';
+                link.className = 'text-sm text-red-500 hover:text-red-700 font-semibold transition';
+                link.innerHTML = '<i class="fa-solid fa-gauge mr-1"></i>Admin';
+                document.getElementById('userBadge').after(link);
+            }
+        });
+
+        // Load categories on page load
+        async function loadCategories() {
+            const res = await fetch('/pool-categories');
+            const data = await res.json();
+            const select = document.getElementById('categorySelect');
+            const browseSelect = document.getElementById('browseCategory');
+
+            select.innerHTML = data.categories.length
+                ? data.categories.map(c => `<option value="${c}">${c}</option>`).join('')
+                : '<option value="">No categories yet</option>';
+
+            browseSelect.innerHTML = '<option value="">All categories</option>' +
+                data.categories.map(c => `<option value="${c}">${c}</option>`).join('');
+        }
+
+        loadCategories();
+
+        // Tab switching
+        function showTab(tab) {
+            ['match', 'browse', 'search'].forEach(t => {
+                document.getElementById(`tab-${t}-panel`).classList.toggle('hidden', t !== tab);
+                document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
+            });
+            if (tab === 'browse') loadBrowse();
+        }
+
+        // Search
+        async function runSearch() {
+            const params = new URLSearchParams();
+            const name = document.getElementById('searchName').value.trim();
+            const location = document.getElementById('searchLocation').value.trim();
+            const skills = document.getElementById('searchSkills').value.trim();
+            const exp = document.getElementById('searchExp').value.trim();
+
+            if (name) params.append('name', name);
+            if (location) params.append('location', location);
+            if (skills) params.append('skills', skills);
+            if (exp) params.append('min_exp', exp);
+
+            const res = await fetch(`/search-candidates?${params}`);
+            const data = await res.json();
+            const list = document.getElementById('searchList');
+            const empty = document.getElementById('searchEmpty');
+            const count = document.getElementById('searchCount');
+            list.innerHTML = '';
+
+            if (!data.candidates.length) {
+                empty.classList.remove('hidden');
+                count.classList.add('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+            count.textContent = `${data.candidates.length} candidate${data.candidates.length > 1 ? 's' : ''} found`;
+            count.classList.remove('hidden');
+
+            data.candidates.forEach(c => renderCandidateCard(c, list, true));
+        }
+
+        function clearSearch() {
+            ['searchName', 'searchLocation', 'searchSkills', 'searchExp'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+            document.getElementById('searchList').innerHTML = '';
+            document.getElementById('searchEmpty').classList.add('hidden');
+            document.getElementById('searchCount').classList.add('hidden');
+        }
+
+        // Match form
+        document.getElementById('matchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const category = document.getElementById('categorySelect').value;
+            const job = document.getElementById('jobDescription').value.trim();
+
+            if (!category) return showMatchError('Please select a category.');
+            if (!job) return showMatchError('Please enter a job description.');
+
+            document.getElementById('matchLoading').classList.remove('hidden');
+            document.getElementById('matchResults').classList.add('hidden');
+            document.getElementById('matchBtn').disabled = true;
+            hideMatchError();
+
+            try {
+                const formData = new FormData();
+                formData.append('ideal_profile', job);
+                formData.append('category', category);
+
+                const res = await fetch('/match-pool', { method: 'POST', body: formData });
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.detail || 'Server error');
+                }
+                const data = await res.json();
+                matchResultsData = data.results;
+                renderMatchResults(data.results);
+            } catch (err) {
+                showMatchError(err.message);
+            } finally {
+                document.getElementById('matchLoading').classList.add('hidden');
+                document.getElementById('matchBtn').disabled = false;
+            }
+        });
+
+        function renderMatchResults(results) {
+            const cards = document.getElementById('matchCards');
+            cards.innerHTML = '';
+
+            results.forEach((r, idx) => {
+                const pct = Math.round(r.similarity * 100);
+                const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`;
+                const raw = r.raw || {};
+                const edu = Array.isArray(raw.education)
+                    ? raw.education.map(e => typeof e === 'object' ? `${e.degree || ''} – ${e.institution || ''}` : e).join('; ')
+                    : (raw.education || '');
+                const languages = Array.isArray(raw.languages)
+                    ? raw.languages.map(l => typeof l === 'object' ? l.language : l).join(', ')
+                    : (raw.languages || '');
+                const card = document.createElement('div');
+                card.className = 'bg-white border border-gray-200 rounded-xl p-5 shadow-sm';
+                card.innerHTML = `
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" class="shortlist-cb w-4 h-4 accent-blue-600" data-idx="${idx}" checked>
+                            <span class="text-lg">${medal}</span>
+                            <span class="font-bold text-gray-800 text-base">${r.name}</span>
+                            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">${r.category}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-24 bg-gray-200 rounded-full h-2">
+                                <div class="score-bar bg-blue-500 h-2 rounded-full" style="width:${pct}%"></div>
+                            </div>
+                            <span class="font-bold text-blue-700 text-sm">${pct}%</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-gray-500 mb-2">
+                        ${r.job_title ? `<div><i class="fa-solid fa-briefcase mr-1 w-4"></i>${r.job_title}</div>` : ''}
+                        ${r.location ? `<div><i class="fa-solid fa-location-dot mr-1 w-4"></i>${r.location}</div>` : ''}
+                        ${r.years_of_experience ? `<div><i class="fa-solid fa-clock mr-1 w-4"></i>${r.years_of_experience} yrs exp</div>` : ''}
+                        ${r.email ? `<div><i class="fa-solid fa-envelope mr-1 w-4"></i>${r.email}</div>` : ''}
+                        ${raw.phone ? `<div><i class="fa-solid fa-phone mr-1 w-4"></i>${raw.phone}</div>` : ''}
+                        ${languages ? `<div><i class="fa-solid fa-language mr-1 w-4"></i>${languages}</div>` : ''}
+                    </div>
+                    ${r.skills ? `<p class="text-xs text-gray-400 mb-1"><i class="fa-solid fa-wrench mr-1"></i>${r.skills}</p>` : ''}
+                    ${edu ? `<p class="text-xs text-gray-400"><i class="fa-solid fa-graduation-cap mr-1"></i>${edu}</p>` : ''}
+                    ${raw.summary ? `<p class="mt-2 text-xs text-gray-500 italic border-t border-gray-100 pt-2">${raw.summary}</p>` : ''}
+                `;
+                cards.appendChild(card);
+            });
+
+            document.getElementById('matchResults').classList.remove('hidden');
+        }
+
+        function renderCandidateCard(c, container, showCategory = false) {
+            const r = c.raw;
+            const skills = Array.isArray(r.skills) ? r.skills.join(', ') : (r.skills || '');
+            const edu = Array.isArray(r.education)
+                ? r.education.map(e => typeof e === 'object' ? `${e.degree || ''} – ${e.institution || ''}` : e).join('; ')
+                : (r.education || '');
+            const languages = Array.isArray(r.languages)
+                ? r.languages.map(l => typeof l === 'object' ? l.language : l).join(', ')
+                : (r.languages || '');
+            const card = document.createElement('div');
+            card.className = 'bg-white border border-gray-200 rounded-xl p-5 shadow-sm';
+            card.innerHTML = `
+                <div class="flex items-start justify-between mb-3">
+                    <div>
+                        <span class="font-bold text-gray-800 text-base">${c.name}</span>
+                        ${showCategory ? `<span class="ml-2 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">${c.category}</span>` : `<span class="ml-2 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">${c.category}</span>`}
+                    </div>
+                    <button onclick="deleteCandidate('${c.id}', this)"
+                        class="text-gray-300 hover:text-red-500 transition text-lg">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-gray-500 mb-2">
+                    ${r.job_title ? `<div><i class="fa-solid fa-briefcase mr-1 w-4"></i>${r.job_title}</div>` : ''}
+                    ${r.location ? `<div><i class="fa-solid fa-location-dot mr-1 w-4"></i>${r.location}</div>` : ''}
+                    ${r.years_of_experience ? `<div><i class="fa-solid fa-clock mr-1 w-4"></i>${r.years_of_experience} yrs exp</div>` : ''}
+                    ${r.email ? `<div><i class="fa-solid fa-envelope mr-1 w-4"></i>${r.email}</div>` : ''}
+                    ${r.phone ? `<div><i class="fa-solid fa-phone mr-1 w-4"></i>${r.phone}</div>` : ''}
+                    ${languages ? `<div><i class="fa-solid fa-language mr-1 w-4"></i>${languages}</div>` : ''}
+                </div>
+                ${skills ? `<p class="text-xs text-gray-400 mb-1"><i class="fa-solid fa-wrench mr-1"></i>${skills}</p>` : ''}
+                ${edu ? `<p class="text-xs text-gray-400"><i class="fa-solid fa-graduation-cap mr-1"></i>${edu}</p>` : ''}
+                ${r.summary ? `<p class="mt-2 text-xs text-gray-500 italic border-t border-gray-100 pt-2">${r.summary}</p>` : ''}
+            `;
+            container.appendChild(card);
+        }
+
+        // Browse pool
+        async function loadBrowse() {
+            const category = document.getElementById('browseCategory').value;
+            const url = category ? `/pool-candidates?category=${encodeURIComponent(category)}` : '/pool-candidates';
+            const res = await fetch(url);
+            const data = await res.json();
+            const list = document.getElementById('browseList');
+            const empty = document.getElementById('browseEmpty');
+            list.innerHTML = '';
+
+            if (!data.candidates.length) {
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+            data.candidates.forEach(c => renderCandidateCard(c, list));
+        }
+
+        async function deleteCandidate(id, btn) {
+            if (!confirm('Remove this candidate from the pool?')) return;
+            await fetch(`/pool-candidates/${id}`, { method: 'DELETE' });
+            btn.closest('div.bg-white').remove();
+        }
+
+        function showMatchError(msg) {
+            const el = document.getElementById('matchError');
+            el.textContent = msg;
+            el.classList.remove('hidden');
+        }
+
+        function hideMatchError() {
+            document.getElementById('matchError').classList.add('hidden');
+        }
+
+        // Shortlist email
+        let matchResultsData = [];
+
+        function generatePoolEmail() {
+            const jobTitle = document.getElementById('poolJobTitle').value.trim() || 'the role';
+            const manager = document.getElementById('poolHiringManager').value.trim() || 'Hiring Manager';
+
+            const checked = [...document.querySelectorAll('.shortlist-cb:checked')];
+            if (!checked.length) { alert('Please select at least one candidate.'); return; }
+
+            const selected = checked.map(cb => matchResultsData[parseInt(cb.dataset.idx)]);
+            const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+            let body = `Hi ${manager},\n\n`;
+            body += `Please find below the candidate shortlist for the ${jobTitle} position.\n\n`;
+
+            selected.forEach((r, i) => {
+                const raw = r.raw || {};
+                const pct = Math.round((parseFloat(r.similarity) || 0) * 100);
+                const skills = Array.isArray(raw.skills) ? raw.skills.slice(0, 6).join(', ') : (r.skills || '');
+                const exp = r.years_of_experience || raw.years_of_experience || '';
+                const location = r.location || raw.location || '';
+                const email = r.email || raw.email || '';
+                const title = r.job_title || raw.job_title || '';
+
+                body += `${i + 1}. ${r.name}`;
+                body += ` (${pct}% match)\n`;
+                if (title || location || exp) {
+                    const meta = [title, exp ? exp + ' yrs exp' : '', location].filter(Boolean).join(' · ');
+                    body += `   ${meta}\n`;
+                }
+                if (skills) body += `   Key skills: ${skills}\n`;
+                if (email) body += `   Email: ${email}\n`;
+                body += '\n';
+            });
+
+            body += `Please let me know if you would like to arrange interviews.\n\n`;
+            body += `Best regards\n\n`;
+            body += `---\nGenerated by CV Bam Bam · ${today}`;
+
+            document.getElementById('emailContent').value = body;
+            document.getElementById('emailModal').classList.remove('hidden');
+        }
+
+        function closeEmailModal() {
+            document.getElementById('emailModal').classList.add('hidden');
+            document.getElementById('copyConfirm').classList.add('hidden');
+        }
+
+        function copyEmail() {
+            navigator.clipboard.writeText(document.getElementById('emailContent').value).then(() => {
+                document.getElementById('copyConfirm').classList.remove('hidden');
+                setTimeout(() => document.getElementById('copyConfirm').classList.add('hidden'), 2000);
+            });
+        }
+    </script>
+
+</body>
+</html>

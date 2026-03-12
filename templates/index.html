@@ -2,181 +2,289 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Cv Bam Bam is a smart, semantic CV parser designed for small businesses. Instantly extract structured data from resumes and find the best candidates using AI.">
-    <meta name="keywords" content="CV parser, ATS optimizer, resume analysis, semantic search, candidate matching, AI hiring tool, small business recruitment">
-    <meta name="author" content="Gabriele Monti">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cv Bam Bam — semantic CV parsing for small businesses. Upload CVs, rank candidates by match, build a talent pool. Free to start.">
+    <meta name="keywords" content="CV parser, resume screening, ATS alternative, semantic search, candidate matching, AI hiring tool, small business recruitment">
     <meta property="og:title" content="Cv Bam Bam | Semantic CV Parser for Small Businesses">
-    <meta property="og:description" content="Smart, corporate-grade CV parsing for small teams. Export candidate data to CSV and match talent using AI.">
+    <meta property="og:description" content="Upload CVs, rank candidates by match, build a talent pool. Corporate-grade hiring intelligence for small teams.">
     <meta property="og:image" content="/static/image.jpg">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:url" content="https://www.cvbambam.com">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Cv Bam Bam | Smart CV Parser">
     <meta name="twitter:description" content="Semantic CV parsing with AI for small business hiring.">
     <meta name="twitter:image" content="/static/image.jpg">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cv Bam Bam | Semantic CV Parser for Small Businesses</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .language-switch {
-            position: relative;
-            width: 60px;
-            height: 30px;
-        }
-        .language-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #3b82f6;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "EN";
-            height: 22px;
-            width: 22px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: bold;
-            color: #3b82f6;
-        }
-        input:checked + .slider {
-            background-color: #10b981;
-        }
-        input:checked + .slider:before {
-            content: "IT";
-            transform: translateX(30px);
-            color: #10b981;
-        }
-    </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-white font-sans text-gray-800">
 
-    <!-- Language Switch -->
-    <div class="fixed top-4 right-4 z-50 flex items-center gap-2">
-        <label class="language-switch">
-            <input type="checkbox" id="languageToggle">
-            <span class="slider"></span>
-        </label>
-    </div>
+    <!-- Nav -->
+    <nav class="border-b border-gray-100 bg-white sticky top-0 z-10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-6xl">
+            <a href="/" class="text-2xl font-bold text-blue-600">Cv Bam Bam</a>
+            <div class="flex items-center gap-6">
+                <a href="/hiring-your-first-employee.html" class="text-sm text-gray-600 hover:text-blue-600 hidden md:block">Guides</a>
+                <a href="/pricing" class="text-sm text-gray-600 hover:text-blue-600 hidden md:block">Pricing</a>
+                <a href="/contact" class="text-sm text-gray-600 hover:text-blue-600 hidden md:block">Contact</a>
+                <a href="/app" class="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-blue-700 transition">Try Free</a>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Hero Section -->
-    <div class="container mx-auto px-4 py-16 md:py-24">
-        <div class="flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-10 md:mb-0">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4" data-en="Cv Bam Bam" data-it="Cv Bam Bam">Cv Bam Bam</h1>
-                <h2 class="text-2xl md:text-3xl font-semibold text-blue-600 mb-6" data-en="Semantic CV Parser for Small Businesses" data-it="Parser CV Semantico per Piccole Aziende">Semantic CV Parser for Small Businesses</h2>
-                <p class="text-gray-600 mb-8 text-lg" data-en="Cv Bam Bam uses advanced semantic similarity to help small companies find the best candidates—fast. Parse resumes like a corporate ATS, extract data into CSV format, and simplify your hiring process in seconds. No signup. No friction." data-it="Cv Bam Bam utilizza la similarità semantica per aiutare le piccole aziende a trovare rapidamente i candidati migliori. Analizza i CV come un ATS aziendale, esporta i dati in formato CSV e semplifica la selezione in pochi secondi. Nessuna registrazione, nessun ostacolo.">
-                    Cv Bam Bam uses advanced semantic similarity to help small companies find the best candidates—fast. Parse resumes like a corporate 
-                    <a href="/what-is-an-ats.html" class="text-blue-600 hover:underline font-medium">ATS system</a>, 
-                    extract data into CSV format, and simplify your hiring process in seconds. No signup. No friction.
-                </p>
+    <!-- Hero -->
+    <section class="container mx-auto px-6 py-20 max-w-6xl">
+        <div class="flex flex-col md:flex-row items-center gap-14">
+            <div class="md:w-1/2">
+                <span class="inline-block bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full mb-5 uppercase tracking-wide">AI-powered CV screening</span>
+                <h1 class="text-5xl font-bold text-gray-900 leading-tight mb-6">Hire smarter.<br>Screen faster.</h1>
+                <p class="text-xl text-gray-500 mb-8 leading-relaxed">Upload your CVs, describe the role, and get a ranked shortlist in seconds. Then save the best candidates to your talent pool — ready for your next hire.</p>
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="/gradio" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105 shadow-lg">
-                        <i class="fas fa-bolt mr-2"></i> <span data-en="Try Now – Just One Click!" data-it="Prova Ora – Un Solo Click!">Try Now – Just One Click!</span>
+                    <a href="/app" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-7 rounded-full transition shadow-md text-center">
+                        Start for free
                     </a>
-                    <a href="https://wa.me/447981395253" target="_blank" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105 shadow-lg">
-                        <i class="fas fa-envelope mr-2"></i> <span data-en="Contact Us" data-it="Contattaci">Contact Us</span>
+                    <a href="/hiring-your-first-employee.html" class="border border-gray-200 text-gray-700 font-semibold py-3 px-7 rounded-full hover:border-blue-300 hover:text-blue-600 transition text-center">
+                        Read the guide
                     </a>
                 </div>
+                <p class="text-sm text-gray-400 mt-5">No credit card. No setup. 10 CVs free.</p>
             </div>
 
-            <div class="md:w-1/2 relative">
-                <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?auto=format&fit=crop&w=1470&q=80" alt="CV Analysis" class="rounded-xl shadow-2xl w-full h-auto">
-                    <div class="mt-8">
-                        <img src="static/image.jpg" alt="DeepSeek Inside" class="w-32 md:w-40" title="DeepSeek Inside">
+            <div class="md:w-1/2">
+                <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 shadow-sm">
+                    <div class="text-xs text-gray-400 uppercase tracking-widest mb-4 font-semibold">Ranked candidates</div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between bg-white rounded-xl px-4 py-3 border border-gray-100 shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm">1</div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 text-sm">Sarah Mitchell</div>
+                                    <div class="text-xs text-gray-400">Senior Product Manager · London</div>
+                                </div>
+                            </div>
+                            <span class="text-green-600 font-bold text-sm">94%</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-white rounded-xl px-4 py-3 border border-gray-100 shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm">2</div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 text-sm">James Okafor</div>
+                                    <div class="text-xs text-gray-400">Product Lead · Manchester</div>
+                                </div>
+                            </div>
+                            <span class="text-green-600 font-bold text-sm">87%</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-white rounded-xl px-4 py-3 border border-gray-100 shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm">3</div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 text-sm">Priya Sharma</div>
+                                    <div class="text-xs text-gray-400">Product Manager · Remote</div>
+                                </div>
+                            </div>
+                            <span class="text-yellow-500 font-bold text-sm">79%</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-white rounded-xl px-4 py-3 border border-gray-100 opacity-50">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 font-bold text-sm">4</div>
+                                <div>
+                                    <div class="font-semibold text-gray-500 text-sm">Daniel Cruz</div>
+                                    <div class="text-xs text-gray-300">Marketing Manager · Bristol</div>
+                                </div>
+                            </div>
+                            <span class="text-gray-400 font-bold text-sm">41%</span>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <a href="/app" class="text-sm text-blue-600 hover:underline font-medium">Upload your CVs to get started →</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Learn More Section (Cluster Links) -->
-    <div class="bg-white py-16">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6">
-                Learn More About CV Parsing
-            </h2>
-            <p class="text-gray-600 mb-6">
-                Want to understand how semantic CV parsing works and how it compares to traditional resume screening tools? Explore our in-depth guides below.
-            </p>
-
-            <ul class="space-y-3 text-blue-600 font-medium">
-                <li>
-                    <a href="/what-is-a-cv-parser.html" class="hover:underline">
-                        What is a CV Parser? (Beginner Guide)
-                    </a>
-                </li>
-                <li>
-                    <a href="/ats-vs-manual-screening.html" class="hover:underline">
-                        ATS vs Manual Resume Screening
-                    </a>
-                </li>
-                <li>
-                    <a href="/best-cv-parsers-small-business.html" class="hover:underline">
-                        Best CV Parsers for Small Businesses
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <h2 class="text-2xl font-bold">Cv Bam Bam</h2>
-                    <p class="text-gray-400 mt-2" data-en="Corporate-grade semantic CV parsing for small teams. Export to CSV. Hire smarter." data-it="Parsing semantico di livello aziendale per piccoli team. Esporta in CSV. Assumi meglio.">
-                        Corporate-grade semantic CV parsing for small teams. Export to CSV. Hire smarter.
-                    </p>
+    <!-- How it works -->
+    <section class="bg-gray-50 py-20 border-t border-gray-100">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-3">How it works</h2>
+            <p class="text-center text-gray-500 mb-14">Three steps from inbox to shortlist.</p>
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="text-center">
+                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <i class="fas fa-file-upload text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Upload CVs</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Drop in PDFs or Word files — as many as you have. The parser extracts structured data from every one automatically.</p>
                 </div>
-                <div class="flex space-x-4">
-                    <a href="https://www.linkedin.com/in/gabrielemonti/" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
-                        <i class="fab fa-linkedin text-xl"></i>
-                    </a>
+                <div class="text-center">
+                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <i class="fas fa-sliders-h text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Describe the role</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Paste your job description or write a few sentences. The AI matches every candidate semantically — no keyword games.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <i class="fas fa-list-ol text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Get a ranked shortlist</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Candidates ranked by match score. Save the best ones to your talent pool for future roles. Export everything to CSV.</p>
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-6 pt-6 text-center text-gray-400">
-                <p data-en="© 2023 Cv Bam Bam. All rights reserved." data-it="© 2023 Cv Bam Bam. Tutti i diritti riservati.">
-                    © 2023 Cv Bam Bam. All rights reserved.
-                </p>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-20 container mx-auto px-6 max-w-5xl">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-3">Everything a small business needs to hire well</h2>
+        <p class="text-center text-gray-500 mb-14">No enterprise pricing. No HR team required.</p>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="flex gap-5">
+                <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-brain text-blue-600"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-1">Semantic CV matching</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">Understands meaning, not just keywords. A candidate who "grew revenue" matches a brief asking for "commercial growth experience."</p>
+                </div>
+            </div>
+            <div class="flex gap-5">
+                <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-database text-blue-600"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-1">Talent pool</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">Save strong candidates by category. When your next role opens, match against your pool before you advertise.</p>
+                </div>
+            </div>
+            <div class="flex gap-5">
+                <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-file-csv text-blue-600"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-1">CSV export</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">Every parsed CV becomes structured data you can export, share, or import into your own systems.</p>
+                </div>
+            </div>
+            <div class="flex gap-5">
+                <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-envelope-open-text text-blue-600"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-1">Shortlist emails</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">Select your top candidates and generate a clean shortlist email ready to share with your team or hiring manager.</p>
+                </div>
+            </div>
+            <div class="flex gap-5">
+                <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-search text-blue-600"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-1">Candidate search</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">Filter your pool by name, skills, location, and years of experience. Find the right person in seconds.</p>
+                </div>
+            </div>
+            <div class="flex gap-5">
+                <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-lock text-blue-600"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-1">Private and secure</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">Your candidates are only visible to you. Scoped by account, stored securely, and never shared.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Hubs -->
+    <section class="bg-gray-50 py-20 border-t border-gray-100">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2 text-center">Hiring guides for small businesses</h2>
+            <p class="text-gray-500 text-center mb-14">Practical advice — no HR jargon, no enterprise assumptions.</p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <div class="bg-white rounded-2xl p-7 border border-gray-200 shadow-sm">
+                    <div class="text-blue-600 text-2xl mb-4"><i class="fas fa-user-plus"></i></div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Small Business Hiring</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="/hiring-your-first-employee.html" class="text-blue-600 hover:underline font-semibold">Hiring your first employee — complete guide</a></li>
+                        <li><a href="/how-to-write-job-description-small-business.html" class="text-gray-600 hover:text-blue-600 hover:underline">How to write a job description</a></li>
+                        <li><a href="/how-long-should-hiring-take.html" class="text-gray-600 hover:text-blue-600 hover:underline">How long should hiring take?</a></li>
+                        <li><a href="/how-to-hire-remotely-small-business.html" class="text-gray-600 hover:text-blue-600 hover:underline">How to hire remotely</a></li>
+                        <li><a href="/how-to-onboard-first-employee.html" class="text-gray-600 hover:text-blue-600 hover:underline">How to onboard your first employee</a></li>
+                        <li><a href="/hiring-without-hr-department.html" class="text-gray-600 hover:text-blue-600 hover:underline">Hiring without an HR department</a></li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-2xl p-7 border border-gray-200 shadow-sm">
+                    <div class="text-blue-600 text-2xl mb-4"><i class="fas fa-chess"></i></div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Hiring Strategy</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="/how-to-screen-resumes-faster.html" class="text-blue-600 hover:underline font-semibold">How to screen resumes faster</a></li>
+                        <li><a href="/skill-based-hiring-vs-credentials.html" class="text-gray-600 hover:text-blue-600 hover:underline">Skill-based vs credential-based hiring</a></li>
+                        <li><a href="/resume-screening-bias.html" class="text-gray-600 hover:text-blue-600 hover:underline">Resume screening bias explained</a></li>
+                        <li><a href="/why-candidates-ghost-you.html" class="text-gray-600 hover:text-blue-600 hover:underline">Why candidates ghost you</a></li>
+                        <li><a href="/how-to-shortlist-candidates.html" class="text-gray-600 hover:text-blue-600 hover:underline">How to shortlist candidates</a></li>
+                        <li><a href="/semantic-search-recruitment.html" class="text-gray-600 hover:text-blue-600 hover:underline">How semantic search works in hiring</a></li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-2xl p-7 border border-gray-200 shadow-sm">
+                    <div class="text-blue-600 text-2xl mb-4"><i class="fas fa-database"></i></div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Talent Pool Strategy</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="/what-is-a-talent-pool.html" class="text-blue-600 hover:underline font-semibold">What is a talent pool?</a></li>
+                        <li><a href="/free-talent-pool-software-small-business.html" class="text-gray-600 hover:text-blue-600 hover:underline">Free talent pool software compared</a></li>
+                        <li><a href="/ai-recruiting-vs-ats.html" class="text-gray-600 hover:text-blue-600 hover:underline">AI recruiting tools vs traditional ATS</a></li>
+                        <li><a href="/what-is-a-cv-parser.html" class="text-gray-600 hover:text-blue-600 hover:underline">What is a CV parser?</a></li>
+                        <li><a href="/best-cv-parsers-small-business.html" class="text-gray-600 hover:text-blue-600 hover:underline">Best CV parsers for small businesses</a></li>
+                        <li><a href="/ats-vs-manual-screening.html" class="text-gray-600 hover:text-blue-600 hover:underline">ATS vs manual screening</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 container mx-auto px-6 max-w-3xl text-center">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Ready to find your next hire faster?</h2>
+        <p class="text-gray-500 text-lg mb-8">Free to start. No setup. Screen your first 10 CVs today.</p>
+        <a href="/app" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-full transition shadow-lg text-lg">
+            Start screening free
+        </a>
+        <p class="text-sm text-gray-400 mt-5">Questions? <a href="/contact" class="text-blue-500 hover:underline">Get in touch</a></p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+                <div>
+                    <a href="/" class="text-2xl font-bold">Cv Bam Bam</a>
+                    <p class="text-gray-400 mt-2 text-sm max-w-xs">Corporate-grade semantic CV parsing for small teams. Export to CSV. Hire smarter.</p>
+                </div>
+                <div class="grid grid-cols-2 gap-x-16 gap-y-2 text-sm text-gray-400">
+                    <a href="/app" class="hover:text-white">App</a>
+                    <a href="/hiring-your-first-employee.html" class="hover:text-white">Hiring guides</a>
+                    <a href="/what-is-a-talent-pool.html" class="hover:text-white">Talent pool</a>
+                    <a href="/how-to-screen-resumes-faster.html" class="hover:text-white">CV screening</a>
+                    <a href="/what-is-a-cv-parser.html" class="hover:text-white">What is a CV parser?</a>
+                    <a href="/ai-recruiting-vs-ats.html" class="hover:text-white">AI vs ATS</a>
+                    <a href="/pricing" class="hover:text-white">Pricing</a>
+                    <a href="/contact" class="hover:text-white">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
+                <p>© 2026 Cv Bam Bam. All rights reserved.</p>
+                <a href="https://www.linkedin.com/in/gabrielemonti/" target="_blank" class="hover:text-white mt-3 md:mt-0">
+                    <i class="fab fa-linkedin text-lg"></i>
+                </a>
             </div>
         </div>
     </footer>
 
-    <script>
-        const languageToggle = document.getElementById('languageToggle');
-        const elementsToTranslate = document.querySelectorAll('[data-en], [data-it]');
-
-        languageToggle.addEventListener('change', function () {
-            const isItalian = this.checked;
-            elementsToTranslate.forEach(element => {
-                if (isItalian && element.hasAttribute('data-it')) {
-                    element.textContent = element.getAttribute('data-it');
-                } else if (!isItalian && element.hasAttribute('data-en')) {
-                    element.textContent = element.getAttribute('data-en');
-                }
-            });
-        });
-    </script>
 </body>
 </html>

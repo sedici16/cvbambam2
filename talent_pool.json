@@ -1,0 +1,169 @@
+[
+  {
+    "id": "d50a21ec-9df1-4829-b471-e4ba3fab1014",
+    "name": "Alice Bianchi",
+    "category": "python",
+    "raw": {
+      "name": "Alice Bianchi",
+      "summary": "Senior Data Scientist with 8 years of experience in NLP, machine learning, and Python. Passionate about building AI-driven products.",
+      "job_title": "Senior Data Scientist",
+      "location": "London, UK",
+      "years_of_experience": 8,
+      "education": [
+        {
+          "degree": "MSc in Machine Learning",
+          "institution": "University College London",
+          "year": 2016
+        },
+        {
+          "degree": "BSc in Computer Science",
+          "institution": "University of Bristol",
+          "year": 2014
+        }
+      ],
+      "work_experience": [
+        {
+          "role": "Senior Data Scientist",
+          "company": "TechCorp London",
+          "duration": "2019-present",
+          "description": "Built NLP pipelines for document classification and entity extraction."
+        },
+        {
+          "role": "ML Engineer",
+          "company": "DataLab",
+          "duration": "2016-2019",
+          "description": "Developed recommendation systems using collaborative filtering."
+        }
+      ],
+      "skills": [
+        "Python",
+        "NLP",
+        "Machine Learning",
+        "FastAPI",
+        "PyTorch",
+        "Hugging Face",
+        "SQL",
+        "Docker",
+        "AWS"
+      ],
+      "languages": [
+        {
+          "language": "English",
+          "fluency": "Native"
+        },
+        {
+          "language": "Italian",
+          "fluency": "Fluent"
+        }
+      ],
+      "email": "alice.bianchi@email.com",
+      "phone": "+44 7700 900123"
+    },
+    "text_for_match": "Alice Bianchi | Senior Data Scientist with 8 years of experience in NLP, machine learning, and Python. Passionate about building AI-driven products. | Senior Data Scientist | London, UK | 8 | Degree: MSc in Machine Learning, Institution: University College London, Year: 2016\nDegree: BSc in Computer Science, Institution: University of Bristol, Year: 2014 | Role: Senior Data Scientist, Company: TechCorp London, Duration: 2019-present, Description: Built NLP pipelines for document classification and entity extraction.\nRole: ML Engineer, Company: DataLab, Duration: 2016-2019, Description: Developed recommendation systems using collaborative filtering. | Python\nNLP\nMachine Learning\nFastAPI\nPyTorch\nHugging Face\nSQL\nDocker\nAWS | Language: English, Fluency: Native\nLanguage: Italian, Fluency: Fluent | alice.bianchi@email.com | +44 7700 900123",
+    "saved_at": "2026-03-11T22:11:00.886771"
+  },
+  {
+    "id": "51007f27-bf67-4e9a-b8fa-8b8367768489",
+    "name": "Marco Rossi",
+    "category": "python",
+    "raw": {
+      "name": "Marco Rossi",
+      "summary": "Junior Frontend Developer with 2 years of experience in React and JavaScript. Looking to grow in web development.",
+      "job_title": "Frontend Developer",
+      "location": "Milan, Italy",
+      "years_of_experience": 2,
+      "education": [
+        "BSc in Computer Engineering - Politecnico di Milano (2021)"
+      ],
+      "work_experience": [
+        "Frontend Developer - WebAgency Milan (2022-present)",
+        "Intern Developer - StartupX (2021-2022)"
+      ],
+      "skills": [
+        "JavaScript",
+        "React",
+        "HTML",
+        "CSS",
+        "Git",
+        "Figma",
+        "REST APIs"
+      ],
+      "languages": [
+        "Italian (Native)",
+        "English (Intermediate)"
+      ],
+      "email": "marco.rossi@email.com",
+      "phone": "+39 02 1234567"
+    },
+    "text_for_match": "Marco Rossi | Junior Frontend Developer with 2 years of experience in React and JavaScript. Looking to grow in web development. | Frontend Developer | Milan, Italy | 2 | BSc in Computer Engineering - Politecnico di Milano (2021) | Frontend Developer - WebAgency Milan (2022-present)\nIntern Developer - StartupX (2021-2022) | JavaScript\nReact\nHTML\nCSS\nGit\nFigma\nREST APIs | Italian (Native)\nEnglish (Intermediate) | marco.rossi@email.com | +39 02 1234567",
+    "saved_at": "2026-03-11T22:11:00.906771"
+  },
+  {
+    "id": "61786e09-45cb-4faa-b082-ff59e67e50fa",
+    "name": "Sarah Chen",
+    "category": "python",
+    "raw": {
+      "name": "Sarah Chen",
+      "email": "sarah.chen@email.com",
+      "location": "San Francisco, USA",
+      "phone": "+1 415 555 0198",
+      "summary": "AI Research Engineer with 6 years of experience in deep learning, NLP, and LLM fine-tuning. Published researcher with strong Python and PyTorch background.",
+      "job_title": "AI Research Engineer",
+      "years_of_experience": 6,
+      "skills": [
+        "Python",
+        "PyTorch",
+        "Transformers",
+        "LLM Fine-tuning",
+        "RAG",
+        "FastAPI",
+        "Kubernetes",
+        "GCP",
+        "NLP",
+        "SQL"
+      ],
+      "work_experience": [
+        {
+          "role": "AI Research Engineer",
+          "company": "OpenMind AI",
+          "duration": "2021-present",
+          "description": "Led fine-tuning of large language models for enterprise clients."
+        },
+        {
+          "role": "NLP Engineer",
+          "company": "SearchTech",
+          "duration": "2018-2021",
+          "description": "Built semantic search systems using sentence transformers."
+        }
+      ],
+      "education": [
+        {
+          "degree": "MSc in Artificial Intelligence",
+          "institution": "Stanford University",
+          "year": "2018"
+        },
+        {
+          "degree": "BSc in Mathematics",
+          "institution": "UC Berkeley",
+          "year": "2016"
+        }
+      ],
+      "certifications": [
+        "Google Cloud Professional ML Engineer",
+        "AWS Certified ML Specialty"
+      ],
+      "languages": [
+        {
+          "language": "English",
+          "fluency": "Native"
+        },
+        {
+          "language": "Mandarin",
+          "fluency": "Fluent"
+        }
+      ]
+    },
+    "text_for_match": "Sarah Chen | sarah.chen@email.com | San Francisco, USA | +1 415 555 0198 | AI Research Engineer with 6 years of experience in deep learning, NLP, and LLM fine-tuning. Published researcher with strong Python and PyTorch background. | AI Research Engineer | 6 | Python\nPyTorch\nTransformers\nLLM Fine-tuning\nRAG\nFastAPI\nKubernetes\nGCP\nNLP\nSQL | Role: AI Research Engineer, Company: OpenMind AI, Duration: 2021-present, Description: Led fine-tuning of large language models for enterprise clients.\nRole: NLP Engineer, Company: SearchTech, Duration: 2018-2021, Description: Built semantic search systems using sentence transformers. | Degree: MSc in Artificial Intelligence, Institution: Stanford University, Year: 2018\nDegree: BSc in Mathematics, Institution: UC Berkeley, Year: 2016 | Google Cloud Professional ML Engineer\nAWS Certified ML Specialty | Language: English, Fluency: Native\nLanguage: Mandarin, Fluency: Fluent",
+    "saved_at": "2026-03-11T22:11:00.920771"
+  }
+]

@@ -135,4 +135,76 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Semantic content cluster — Small Business Hiring (Cluster 1) -->
+  <url>
+    <loc>https://www.cvbambam.com/hiring-your-first-employee.html</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.cvbambam.com/how-to-write-job-description-small-business.html</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.cvbambam.com/how-long-should-hiring-take.html</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.cvbambam.com/how-to-hire-remotely-small-business.html</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.cvbambam.com/how-to-onboard-first-employee.html</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Semantic content cluster — Hiring Strategy (Cluster 2) -->
+  <url>
+    <loc>https://www.cvbambam.com/skill-based-hiring-vs-credentials.html</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.cvbambam.com/resume-screening-bias.html</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.cvbambam.com/why-candidates-ghost-you.html</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Semantic content cluster — Talent Pool Strategy (Cluster 3) -->
+  <url>
+    <loc>https://www.cvbambam.com/what-is-a-talent-pool.html</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.cvbambam.com/free-talent-pool-software-small-business.html</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.cvbambam.com/ai-recruiting-vs-ats.html</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
