@@ -15,8 +15,9 @@ from datetime import datetime, timedelta
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form, Request, Depends
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
+# LOCAL MODEL — commented out to save memory on low-RAM servers
+# from sentence_transformers import SentenceTransformer
+# from sklearn.metrics.pairwise import cosine_similarity
 from typing import List, Optional
 from pydantic import BaseModel
 from passlib.context import CryptContext
@@ -27,11 +28,17 @@ load_dotenv()
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-_model = SentenceTransformer("paraphrase-MiniLM-L3-v2")
-
 MAX_DOCS = 5
 FREE_CV_LIMIT = 10
 DB_FILE = os.getenv("DB_PATH", "talent_pool.db")
+
+# LOCAL MODEL — commented out, swap back when on a server with 2GB+ RAM
+# _model = None
+# def get_model():
+#     global _model
+#     if _model is None:
+#         _model = SentenceTransformer("paraphrase-MiniLM-L3-v2")
+#     return _model
 SESSION_DAYS = 7
 
 pwd_context = CryptContext(schemes=["sha256_crypt"], deprecated="auto")
@@ -104,6 +111,13 @@ def init_db():
                 expires_at TEXT NOT NULL
             )
         """)
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS settings (
+                key TEXT PRIMARY KEY,
+                value TEXT NOT NULL
+            )
+        """)
+        conn.execute("INSERT OR IGNORE INTO settings (key, value) VALUES ('shizzer_mode', '0')")
         try:
             conn.execute("ALTER TABLE users ADD COLUMN verified INTEGER DEFAULT 0")
         except Exception:
@@ -217,9 +231,40 @@ def update_last_active(user_id: str):
 # ── CV processing helpers ──────────────────────────────────────────────────────
 
 def compute_similarity(ideal_profile, text_blocks):
-    embeddings = _model.encode([ideal_profile] + text_blocks)
-    scores = cosine_similarity([embeddings[0]], embeddings[1:])[0]
-    return scores.tolist()
+    # LOCAL MODEL — swap back when on a server with 2GB+ RAM
+    # embeddings = get_model().encode([ideal_profile] + text_blocks)
+    # scores = cosine_similarity([embeddings[0]], embeddings[1:])[0]
+    # return scores.tolist()
+    return compute_similarity_api(ideal_profile, text_blocks)
+
+
+def compute_similarity_api(ideal_profile: str, text_blocks: list) -> list:
+    from cv_extractor import client
+    scores = []
+    for text in text_blocks:
+        prompt = f"""Score how well this candidate matches the job description.
+Return ONLY a number between 0 and 1 (e.g. 0.87). Nothing else.
+
+JOB DESCRIPTION:
+{ideal_profile}
+
+CANDIDATE SUMMARY:
+{text[:1500]}
+
+SCORE:"""
+        try:
+            response = client.chat.completions.create(
+                model="deepseek-ai/DeepSeek-V3-0324",
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.0,
+                max_tokens=10,
+            )
+            raw = response.choices[0].message.content.strip()
+            score = float(re.search(r"[\d.]+", raw).group())
+            scores.append(min(max(score, 0.0), 1.0))
+        except Exception:
+            scores.append(0.0)
+    return scores
 
 
 def flatten_value(cell):
