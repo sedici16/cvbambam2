@@ -9,3 +9,5 @@ venv/
 .env/
 .idea/
 *.log
+test_cv_*.pdf
+talent_pool.json
