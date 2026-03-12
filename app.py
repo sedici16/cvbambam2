@@ -27,7 +27,7 @@ load_dotenv()
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-_model = SentenceTransformer("all-MiniLM-L6-v2")
+_model = SentenceTransformer("paraphrase-MiniLM-L3-v2")
 
 MAX_DOCS = 5
 FREE_CV_LIMIT = 10
