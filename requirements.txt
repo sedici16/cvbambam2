@@ -3,8 +3,8 @@ uvicorn[standard]
 pandas
 python-docx
 pymupdf
-# sentence-transformers  # re-enable on 2GB+ RAM server
-# scikit-learn           # re-enable with sentence-transformers
+sentence-transformers
+scikit-learn
 jinja2
 python-multipart
 python-dotenv

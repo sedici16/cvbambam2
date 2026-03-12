@@ -15,9 +15,8 @@ from datetime import datetime, timedelta
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form, Request, Depends
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-# LOCAL MODEL — commented out to save memory on low-RAM servers
-# from sentence_transformers import SentenceTransformer
-# from sklearn.metrics.pairwise import cosine_similarity
+from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
 from typing import List, Optional
 from pydantic import BaseModel
 from passlib.context import CryptContext
@@ -32,13 +31,7 @@ MAX_DOCS = 5
 FREE_CV_LIMIT = 10
 DB_FILE = os.getenv("DB_PATH", "talent_pool.db")
 
-# LOCAL MODEL — commented out, swap back when on a server with 2GB+ RAM
-# _model = None
-# def get_model():
-#     global _model
-#     if _model is None:
-#         _model = SentenceTransformer("paraphrase-MiniLM-L3-v2")
-#     return _model
+_model = SentenceTransformer("all-MiniLM-L6-v2")
 SESSION_DAYS = 7
 
 pwd_context = CryptContext(schemes=["sha256_crypt"], deprecated="auto")
@@ -231,11 +224,9 @@ def update_last_active(user_id: str):
 # ── CV processing helpers ──────────────────────────────────────────────────────
 
 def compute_similarity(ideal_profile, text_blocks):
-    # LOCAL MODEL — swap back when on a server with 2GB+ RAM
-    # embeddings = get_model().encode([ideal_profile] + text_blocks)
-    # scores = cosine_similarity([embeddings[0]], embeddings[1:])[0]
-    # return scores.tolist()
-    return compute_similarity_api(ideal_profile, text_blocks)
+    embeddings = _model.encode([ideal_profile] + text_blocks)
+    scores = cosine_similarity([embeddings[0]], embeddings[1:])[0]
+    return scores.tolist()
 
 
 def compute_similarity_api(ideal_profile: str, text_blocks: list) -> list:
