@@ -3,33 +3,47 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://www.cvbambam.com/</loc>
+    <loc>https://cvbambam.com/</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
+  <!-- Core pages -->
+  <url>
+    <loc>https://cvbambam.com/pricing</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://cvbambam.com/contact</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <!-- DOFU — Conversion pages (priority 0.9) -->
   <url>
-    <loc>https://www.cvbambam.com/parse-cvs-instantly.html</loc>
+    <loc>https://cvbambam.com/parse-cvs-instantly.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/free-ai-resume-screener.html</loc>
+    <loc>https://cvbambam.com/free-ai-resume-screener.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/get-started-cv-bam-bam.html</loc>
+    <loc>https://cvbambam.com/get-started-cv-bam-bam.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/export-candidate-data-csv.html</loc>
+    <loc>https://cvbambam.com/export-candidate-data-csv.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -37,37 +51,37 @@
 
   <!-- MOFU — Evaluation pages (priority 0.8) -->
   <url>
-    <loc>https://www.cvbambam.com/ats-vs-manual-screening.html</loc>
+    <loc>https://cvbambam.com/ats-vs-manual-screening.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/best-cv-parsers-small-business.html</loc>
+    <loc>https://cvbambam.com/best-cv-parsers-small-business.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/free-vs-paid-resume-screening.html</loc>
+    <loc>https://cvbambam.com/free-vs-paid-resume-screening.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/how-to-choose-cv-parser.html</loc>
+    <loc>https://cvbambam.com/how-to-choose-cv-parser.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/cv-parser-csv-export.html</loc>
+    <loc>https://cvbambam.com/cv-parser-csv-export.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/lightweight-ats-alternatives.html</loc>
+    <loc>https://cvbambam.com/lightweight-ats-alternatives.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -75,61 +89,61 @@
 
   <!-- TOFU — Informational pages (priority 0.7) -->
   <url>
-    <loc>https://www.cvbambam.com/what-is-a-cv-parser.html</loc>
+    <loc>https://cvbambam.com/what-is-a-cv-parser.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/how-to-hire-for-small-business.html</loc>
+    <loc>https://cvbambam.com/how-to-hire-for-small-business.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/what-is-an-ats.html</loc>
+    <loc>https://cvbambam.com/what-is-an-ats.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/how-to-screen-resumes-faster.html</loc>
+    <loc>https://cvbambam.com/how-to-screen-resumes-faster.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/hiring-without-hr-department.html</loc>
+    <loc>https://cvbambam.com/hiring-without-hr-department.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/semantic-search-recruitment.html</loc>
+    <loc>https://cvbambam.com/semantic-search-recruitment.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/how-to-shortlist-candidates.html</loc>
+    <loc>https://cvbambam.com/how-to-shortlist-candidates.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/resume-data-extraction.html</loc>
+    <loc>https://cvbambam.com/resume-data-extraction.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/ai-hiring-small-business.html</loc>
+    <loc>https://cvbambam.com/ai-hiring-small-business.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/build-hiring-pipeline.html</loc>
+    <loc>https://cvbambam.com/build-hiring-pipeline.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -137,31 +151,31 @@
 
   <!-- Semantic content cluster — Small Business Hiring (Cluster 1) -->
   <url>
-    <loc>https://www.cvbambam.com/hiring-your-first-employee.html</loc>
+    <loc>https://cvbambam.com/hiring-your-first-employee.html</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/how-to-write-job-description-small-business.html</loc>
+    <loc>https://cvbambam.com/how-to-write-job-description-small-business.html</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/how-long-should-hiring-take.html</loc>
+    <loc>https://cvbambam.com/how-long-should-hiring-take.html</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/how-to-hire-remotely-small-business.html</loc>
+    <loc>https://cvbambam.com/how-to-hire-remotely-small-business.html</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/how-to-onboard-first-employee.html</loc>
+    <loc>https://cvbambam.com/how-to-onboard-first-employee.html</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -169,19 +183,19 @@
 
   <!-- Semantic content cluster — Hiring Strategy (Cluster 2) -->
   <url>
-    <loc>https://www.cvbambam.com/skill-based-hiring-vs-credentials.html</loc>
+    <loc>https://cvbambam.com/skill-based-hiring-vs-credentials.html</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/resume-screening-bias.html</loc>
+    <loc>https://cvbambam.com/resume-screening-bias.html</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/why-candidates-ghost-you.html</loc>
+    <loc>https://cvbambam.com/why-candidates-ghost-you.html</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -189,19 +203,19 @@
 
   <!-- Semantic content cluster — Talent Pool Strategy (Cluster 3) -->
   <url>
-    <loc>https://www.cvbambam.com/what-is-a-talent-pool.html</loc>
+    <loc>https://cvbambam.com/what-is-a-talent-pool.html</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/free-talent-pool-software-small-business.html</loc>
+    <loc>https://cvbambam.com/free-talent-pool-software-small-business.html</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.cvbambam.com/ai-recruiting-vs-ats.html</loc>
+    <loc>https://cvbambam.com/ai-recruiting-vs-ats.html</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

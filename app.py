@@ -13,7 +13,7 @@ import smtplib
 from email.mime.text import MIMEText
 from datetime import datetime, timedelta
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form, Request, Depends
-from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, PlainTextResponse, Response
 from fastapi.staticfiles import StaticFiles
 # LOCAL MODEL — re-enable on 2GB+ RAM server
 # from sentence_transformers import SentenceTransformer
@@ -802,9 +802,37 @@ def download_csv(filename: str, request: Request):
     return FileResponse(path, media_type="text/csv", filename="results.csv")
 
 
+# ── SEO routes ─────────────────────────────────────────────────────────────────
+
+@app.get("/robots.txt", include_in_schema=False)
+@app.head("/robots.txt", include_in_schema=False)
+def robots_txt():
+    content = (
+        "User-agent: *\n"
+        "Allow: /\n"
+        "Disallow: /app\n"
+        "Disallow: /pool\n"
+        "Disallow: /admin\n"
+        "Disallow: /settings\n"
+        "Disallow: /upgrade\n"
+        "Disallow: /auth/\n"
+        "Disallow: /download/\n"
+        "\n"
+        "Sitemap: https://cvbambam.com/sitemap.xml\n"
+    )
+    return PlainTextResponse(content, media_type="text/plain")
+
+
+@app.get("/sitemap.xml", include_in_schema=False)
+@app.head("/sitemap.xml", include_in_schema=False)
+def sitemap():
+    return FileResponse("templates/sitemap.xml", media_type="application/xml")
+
+
 # ── Page routes ────────────────────────────────────────────────────────────────
 
 @app.get("/", include_in_schema=False)
+@app.head("/", include_in_schema=False)
 def root():
     return FileResponse("templates/index.html")
 
@@ -848,11 +876,13 @@ def settings_page(request: Request):
 
 
 @app.get("/contact", include_in_schema=False)
+@app.head("/contact", include_in_schema=False)
 def contact_page():
     return FileResponse("templates/contact.html")
 
 
 @app.get("/pricing", include_in_schema=False)
+@app.head("/pricing", include_in_schema=False)
 def pricing_page():
     return FileResponse("templates/pricing.html")
 
@@ -882,6 +912,7 @@ def admin_page(request: Request):
 
 
 @app.get("/{filename}.html", include_in_schema=False)
+@app.head("/{filename}.html", include_in_schema=False)
 def serve_html(filename: str):
     if not re.match(r'^[\w\-]+$', filename):
         raise HTTPException(status_code=400, detail="Invalid filename.")
