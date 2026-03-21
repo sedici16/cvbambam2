@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Confused about how AI screens CVs? We explain exactly how semantic matching works, why it's better than keyword filtering, and what it means for your hiring.">
+    <title>How AI CV Screening Actually Works — A Plain English Guide | Cv Bam Bam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="canonical" href="https://cvbambam.com/ai-cv-screening-how-it-works.html">
+</head>
+<body class="bg-white font-sans text-gray-800">
+    <nav class="border-b border-gray-100 bg-white sticky top-0 z-10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-6xl">
+            <a href="/" class="text-2xl font-bold text-blue-600">Cv Bam Bam</a>
+            <div class="flex items-center gap-6">
+                <a href="/hiring-your-first-employee.html" class="text-sm text-gray-600 hover:text-blue-600 hidden md:block">Guides</a>
+                <a href="/pricing" class="text-sm text-gray-600 hover:text-blue-600 hidden md:block">Pricing</a>
+                <a href="/contact" class="text-sm text-gray-600 hover:text-blue-600 hidden md:block">Contact</a>
+                <a href="/app" class="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-blue-700 transition">Try Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-16 max-w-3xl">
+        <h1 class="text-4xl font-bold text-gray-900 mb-6">How AI CV Screening Actually Works — A Plain English Guide</h1>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">You have probably heard that AI can screen CVs for you. But if you are like most small business owners, your next thought was: "How does it actually work? And can I trust it?" Fair questions. Let's walk through it without the jargon.</p>
+
+        <h2 class="text-2xl font-bold text-gray-900 mt-12 mb-4">How Traditional CV Screening Works</h2>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">Before we get to AI, it helps to understand the two ways people have traditionally screened CVs.</p>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6"><strong>Manual reading</strong> is the most common approach for small businesses. You open each CV, read through it, and make a judgement call. This works fine when you have 10 applications. It falls apart completely when you have 200 or more.</p>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6"><strong>Keyword filtering</strong> is what most applicant tracking systems (ATS) use. You specify certain words — "ACCA," "Python," "project management" — and the system filters out any CV that does not contain those exact words. It is fast, but it is also crude. And that crudeness creates real problems.</p>
+
+        <h2 class="text-2xl font-bold text-gray-900 mt-12 mb-4">Why Keyword Filtering Fails</h2>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">Keyword filtering treats language like a checklist. Either the word is there, or it is not. But people describe their experience in wildly different ways. Consider a job that requires "team leadership experience." Here are five ways a candidate might describe exactly that skill:</p>
+
+        <ul class="list-disc pl-6 text-lg text-gray-600 leading-relaxed mb-6 space-y-2">
+            <li>"Managed a team of 12 across two offices"</li>
+            <li>"Led the customer service department through a restructure"</li>
+            <li>"Supervised daily operations for a staff of eight"</li>
+            <li>"Oversaw a cross-functional group delivering the product launch"</li>
+            <li>"Ran the warehouse crew, including hiring and performance reviews"</li>
+        </ul>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">None of these contain the exact phrase "team leadership." A keyword filter would miss every single one. Meanwhile, a candidate who wrote "I am interested in team leadership opportunities" — stating an aspiration, not actual experience — would pass the filter.</p>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">This is the fundamental limitation of keyword-based screening. For a deeper look at this problem, see our guide on <a href="/semantic-search-recruitment.html" class="text-blue-600 hover:underline">semantic search in recruitment</a>.</p>
+
+        <h2 class="text-2xl font-bold text-gray-900 mt-12 mb-4">How AI Semantic Screening Works</h2>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">AI-powered CV screening takes a fundamentally different approach. Instead of looking for specific words, it understands <strong>meaning</strong>. The technical term is "semantic matching," but the concept is straightforward.</p>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">When you upload a job description and a stack of CVs, the AI does something clever. It converts both your job description and each CV into what engineers call <strong>embeddings</strong> — essentially, mathematical representations of meaning. Think of it like translating everything into a universal language that captures concepts, not just words.</p>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">In this mathematical space, things that mean similar things sit close together. "Managed a team of 12" and "team leadership experience" end up in nearly the same spot, because they represent the same underlying concept. The AI then measures how close each CV is to your job description in this meaning space.</p>
+
+        <h2 class="text-2xl font-bold text-gray-900 mt-12 mb-4">What Happens in Practice</h2>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">Here is what this looks like when you use a tool like Cv Bam Bam:</p>
+
+        <ul class="list-disc pl-6 text-lg text-gray-600 leading-relaxed mb-6 space-y-2">
+            <li><strong>You upload your job description</strong> — the AI reads it and understands what you are looking for, including the skills, experience level, and context of the role</li>
+            <li><strong>You upload your CVs</strong> — all of them, whether that is 50 or 500</li>
+            <li><strong>The AI reads every CV thoroughly</strong> — not skimming, but actually processing the full content of each document</li>
+            <li><strong>Each CV gets a match score</strong> — a percentage that tells you how closely that candidate's experience aligns with what you need</li>
+            <li><strong>You get a ranked list</strong> — the most relevant candidates at the top, the least relevant at the bottom</li>
+        </ul>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">The entire process takes seconds. Not hours. Not days. Seconds.</p>
+
+        <h2 class="text-2xl font-bold text-gray-900 mt-12 mb-4">What the Scores Actually Mean</h2>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">Transparency matters. When you see a candidate scored at 87%, you should know what that means. The score reflects how closely the overall content of that CV matches the requirements in your job description. A higher score means more of what the candidate offers aligns with what you are looking for.</p>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">It is not a pass/fail system. A candidate scoring 72% is not "bad" — they might be a strong fit who described their experience differently or who brings adjacent skills that are still valuable. The scores help you prioritise where to spend your time, not make the decision for you.</p>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">Understanding what goes on inside a <a href="/what-is-a-cv-parser.html" class="text-blue-600 hover:underline">CV parser</a> can also help you get better results from AI screening tools.</p>
+
+        <h2 class="text-2xl font-bold text-gray-900 mt-12 mb-4">Is It Fair?</h2>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">This is the question everyone should be asking. AI screening is only useful if it is also fair. The good news is that semantic screening is inherently more equitable than keyword filtering in several ways. It does not penalise candidates for using different terminology. It does not favour candidates who have been coached to stuff their CVs with buzzwords. And it evaluates every single application — not just the first 50 that arrived.</p>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">That said, no system is perfect. We have written about <a href="/resume-screening-bias.html" class="text-blue-600 hover:underline">bias in resume screening</a> and what to watch for, because understanding the limitations is just as important as understanding the benefits.</p>
+
+        <h2 class="text-2xl font-bold text-gray-900 mt-12 mb-4">The Bottom Line</h2>
+
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">AI CV screening is not magic and it is not a black box. It is a well-understood technology that reads CVs the way a thoughtful human would — by understanding meaning — but at a speed and scale that no human can match. For small businesses dealing with high application volumes and limited time, it turns an overwhelming task into a manageable one.</p>
+
+        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-8 mt-12 text-center">
+            <h2 class="text-2xl font-bold text-gray-900 mb-3">See it in action</h2>
+            <p class="text-lg text-gray-600 mb-6">Upload a job description and a few CVs. Watch the AI rank them in seconds. No credit card needed.</p>
+            <a href="/app" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition">Try Cv Bam Bam Free</a>
+        </div>
+    </main>
+
+    <footer class="border-t border-gray-100 mt-20 py-10 text-center text-sm text-gray-400">
+        &copy; 2026 Cv Bam Bam. All rights reserved.
+    </footer>
+</body>
+</html>
